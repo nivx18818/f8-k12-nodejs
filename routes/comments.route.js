@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
   const newComment = {
     id: newId,
-    name: req.body.name,
+    body: req.body.body,
   };
 
   comments.push(newComment);

@@ -37,7 +37,8 @@ router.post("/", async (req, res) => {
 
   const newPost = {
     id: newId,
-    name: req.body.name,
+    title: req.body.title,
+    body: req.body.body,
   };
 
   posts.push(newPost);
@@ -64,7 +65,8 @@ router.put("/:id", async (req, res) => {
 
   const updatedPost = {
     ...posts[postIndex],
-    name: req.body.name,
+    title: req.body.title,
+    body: req.body.body,
   };
 
   const updatedPosts = [
