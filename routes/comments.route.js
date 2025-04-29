@@ -40,8 +40,8 @@ router.post("/", async (req, res) => {
     body: req.body.body,
   };
 
-  comments.push(newComment);
-  await writeResource(comments);
+  const newComments = [...comments, newComment];
+  await writeResource(newComments);
 
   res.status(201).json({
     status: "success",

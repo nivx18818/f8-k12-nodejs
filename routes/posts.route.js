@@ -41,8 +41,8 @@ router.post("/", async (req, res) => {
     body: req.body.body,
   };
 
-  posts.push(newPost);
-  await writeResource(posts);
+  const newPosts = [...posts, newPost];
+  await writeResource(newPosts);
 
   res.status(201).json({
     status: "success",
