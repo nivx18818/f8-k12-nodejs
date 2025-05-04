@@ -1,20 +1,18 @@
-const express = require("express");
-const { readDb, writeDb } = require("../utils/db");
-const router = express.Router();
+const { readDb, writeDb } = require("../../utils/db");
 
 const RESOURCE = "comments";
 const readResource = readDb(RESOURCE);
 const writeResource = writeDb(RESOURCE);
 
-router.get("/", async (req, res) => {
+const index = async (req, res) => {
   const comments = await readResource([]);
   res.status(200).json({
     status: "success",
     data: comments,
   });
-});
+};
 
-router.get("/:id", async (req, res) => {
+const show = async (req, res) => {
   const comments = await readResource([]);
   const comment = comments.find((prod) => prod.id === Number(req.params.id));
 
@@ -29,14 +27,15 @@ router.get("/:id", async (req, res) => {
     status: "success",
     data: comment,
   });
-});
+};
 
-router.post("/", async (req, res) => {
+const store = async (req, res) => {
   const comments = await readResource([]);
   const newId = (comments[comments.length - 1]?.id ?? 0) + 1;
 
   const newComment = {
     id: newId,
+    title: req.body.title,
     body: req.body.body,
   };
 
@@ -47,9 +46,9 @@ router.post("/", async (req, res) => {
     status: "success",
     data: newComment,
   });
-});
+};
 
-router.put("/:id", async (req, res) => {
+const update = async (req, res) => {
   const comments = await readResource([]);
   const commentIndex = comments.findIndex(
     (prod) => prod.id === Number(req.params.id)
@@ -62,10 +61,7 @@ router.put("/:id", async (req, res) => {
     });
   }
 
-  const updatedComment = {
-    ...comments[commentIndex],
-    name: req.body.name,
-  };
+  const updatedComment = { ...comments[commentIndex], ...req.body };
 
   const updatedComments = [
     ...comments.slice(0, commentIndex),
@@ -79,9 +75,9 @@ router.put("/:id", async (req, res) => {
     status: "success",
     data: updatedComment,
   });
-});
+};
 
-router.delete("/:id", async (req, res) => {
+const destroy = async (req, res) => {
   const comments = await readResource([]);
   const commentId = Number(req.params.id);
   const updatedComments = comments.filter((prod) => prod.id !== commentId);
@@ -96,6 +92,12 @@ router.delete("/:id", async (req, res) => {
   await writeResource(updatedComments);
 
   res.status(204).send();
-});
+};
 
-module.exports = router;
+module.exports = {
+  index,
+  show,
+  store,
+  update,
+  destroy,
+};

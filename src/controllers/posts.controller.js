@@ -1,20 +1,18 @@
-const express = require("express");
-const { readDb, writeDb } = require("../utils/db");
-const router = express.Router();
+const { readDb, writeDb } = require("../../utils/db");
 
 const RESOURCE = "posts";
 const readResource = readDb(RESOURCE);
 const writeResource = writeDb(RESOURCE);
 
-router.get("/", async (req, res) => {
+const index = async (req, res) => {
   const posts = await readResource([]);
   res.status(200).json({
     status: "success",
     data: posts,
   });
-});
+};
 
-router.get("/:id", async (req, res) => {
+const show = async (req, res) => {
   const posts = await readResource([]);
   const post = posts.find((prod) => prod.id === Number(req.params.id));
 
@@ -29,9 +27,9 @@ router.get("/:id", async (req, res) => {
     status: "success",
     data: post,
   });
-});
+};
 
-router.post("/", async (req, res) => {
+const store = async (req, res) => {
   const posts = await readResource([]);
   const newId = (posts[posts.length - 1]?.id ?? 0) + 1;
 
@@ -48,9 +46,9 @@ router.post("/", async (req, res) => {
     status: "success",
     data: newPost,
   });
-});
+};
 
-router.put("/:id", async (req, res) => {
+const update = async (req, res) => {
   const posts = await readResource([]);
   const postIndex = posts.findIndex(
     (prod) => prod.id === Number(req.params.id)
@@ -63,11 +61,7 @@ router.put("/:id", async (req, res) => {
     });
   }
 
-  const updatedPost = {
-    ...posts[postIndex],
-    title: req.body.title,
-    body: req.body.body,
-  };
+  const updatedPost = { ...posts[postIndex], ...req.body };
 
   const updatedPosts = [
     ...posts.slice(0, postIndex),
@@ -81,9 +75,9 @@ router.put("/:id", async (req, res) => {
     status: "success",
     data: updatedPost,
   });
-});
+};
 
-router.delete("/:id", async (req, res) => {
+const destroy = async (req, res) => {
   const posts = await readResource([]);
   const postId = Number(req.params.id);
   const updatedPosts = posts.filter((prod) => prod.id !== postId);
@@ -98,6 +92,12 @@ router.delete("/:id", async (req, res) => {
   await writeResource(updatedPosts);
 
   res.status(204).send();
-});
+};
 
-module.exports = router;
+module.exports = {
+  index,
+  show,
+  store,
+  update,
+  destroy,
+};

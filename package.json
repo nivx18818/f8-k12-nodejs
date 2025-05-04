@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "start": "node server.js",
-    "watch": "node --watch server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
