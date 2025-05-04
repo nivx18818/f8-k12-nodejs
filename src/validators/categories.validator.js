@@ -3,13 +3,13 @@ const handleValidationErrors = require("./handleValidationErrors");
 
 exports.store = [
   checkSchema({
-    title: {
+    name: {
       notEmpty: true,
-      errorMessage: "Title is required",
+      errorMessage: "Name is required",
     },
-    body: {
+    description: {
       notEmpty: true,
-      errorMessage: "Body is required",
+      errorMessage: "Description is required",
     },
   }),
   handleValidationErrors,
@@ -17,15 +17,15 @@ exports.store = [
 
 exports.update = [
   checkSchema({
-    title: {
+    name: {
       optional: true,
       notEmpty: true,
-      errorMessage: "Title cannot be empty",
+      errorMessage: "Name cannot be empty",
     },
-    body: {
+    description: {
       optional: true,
       notEmpty: true,
-      errorMessage: "Body cannot be empty",
+      errorMessage: "Description cannot be empty",
     },
   }),
   handleValidationErrors,

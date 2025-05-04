@@ -1,19 +1,19 @@
 const { readDb, writeDb } = require("../../utils/db");
 
 const RESOURCE = "comments";
-const readResource = readDb(RESOURCE);
+const readResource = readDb(RESOURCE, []);
 const writeResource = writeDb(RESOURCE);
 
-const index = async (req, res) => {
-  const comments = await readResource([]);
+exports.index = async (req, res) => {
+  const comments = await readResource();
   res.status(200).json({
     status: "success",
     data: comments,
   });
 };
 
-const show = async (req, res) => {
-  const comments = await readResource([]);
+exports.show = async (req, res) => {
+  const comments = await readResource();
   const comment = comments.find((prod) => prod.id === Number(req.params.id));
 
   if (!comment) {
@@ -29,8 +29,8 @@ const show = async (req, res) => {
   });
 };
 
-const store = async (req, res) => {
-  const comments = await readResource([]);
+exports.store = async (req, res) => {
+  const comments = await readResource();
   const newId = (comments[comments.length - 1]?.id ?? 0) + 1;
 
   const newComment = {
@@ -48,8 +48,8 @@ const store = async (req, res) => {
   });
 };
 
-const update = async (req, res) => {
-  const comments = await readResource([]);
+exports.update = async (req, res) => {
+  const comments = await readResource();
   const commentIndex = comments.findIndex(
     (prod) => prod.id === Number(req.params.id)
   );
@@ -77,8 +77,8 @@ const update = async (req, res) => {
   });
 };
 
-const destroy = async (req, res) => {
-  const comments = await readResource([]);
+exports.destroy = async (req, res) => {
+  const comments = await readResource();
   const commentId = Number(req.params.id);
   const updatedComments = comments.filter((prod) => prod.id !== commentId);
 
@@ -92,12 +92,4 @@ const destroy = async (req, res) => {
   await writeResource(updatedComments);
 
   res.status(204).send();
-};
-
-module.exports = {
-  index,
-  show,
-  store,
-  update,
-  destroy,
 };

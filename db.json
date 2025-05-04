@@ -23,32 +23,106 @@
   ],
   "comments": [
     {
-      "postId": 1,
       "id": 1,
+      "postId": 1,
       "name": "id labore ex et quam laborum",
       "email": "Eliseo@gardner.biz",
       "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
     },
     {
-      "postId": 1,
       "id": 2,
+      "postId": 1,
       "name": "quo vero reiciendis velit similique earum",
       "email": "Jayne_Kuhic@sydney.com",
       "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
     },
     {
-      "postId": 1,
       "id": 3,
+      "postId": 1,
       "name": "odio adipisci rerum aut animi",
       "email": "Nikita@garfield.biz",
       "body": "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione"
     },
     {
-      "postId": 1,
       "id": 4,
+      "postId": 1,
       "name": "alias odio sit",
       "email": "Lew@alysha.tv",
       "body": "non et atque\noccaecati deserunt quas accusantium unde odit nobis qui voluptatem\nquia voluptas consequuntur itaque dolor\net qui rerum deleniti ut occaecati"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Electronics",
+      "description": "Devices and gadgets"
+    },
+    {
+      "id": 2,
+      "name": "Books",
+      "description": "Various kinds of books"
+    },
+    {
+      "id": 3,
+      "name": "Clothing",
+      "description": "Men and women apparel"
+    },
+    {
+      "id": 4,
+      "name": "Home",
+      "description": "Home appliances and furniture"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "title": "Essence Mascara Lash Princess",
+      "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+      "price": 9.99
+    },
+    {
+      "id": 2,
+      "title": "Eyeshadow Palette with Mirror",
+      "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+      "price": 19.99
+    },
+    {
+      "id": 3,
+      "title": "Powder Canister",
+      "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
+      "price": 14.99
+    },
+    {
+      "id": 4,
+      "title": "Red Lipstick",
+      "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
+      "price": 12.99
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "todo": "Do something nice for someone you care about",
+      "completed": false,
+      "userId": 152
+    },
+    {
+      "id": 2,
+      "todo": "Memorize a poem",
+      "completed": true,
+      "userId": 13
+    },
+    {
+      "id": 3,
+      "todo": "Watch a classic movie",
+      "completed": true,
+      "userId": 68
+    },
+    {
+      "id": 4,
+      "todo": "Watch a documentary",
+      "completed": false,
+      "userId": 84
     }
   ]
 }

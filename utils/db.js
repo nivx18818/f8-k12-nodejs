@@ -20,8 +20,8 @@ const DB_FILE = "./db.json";
   }
 })();
 
-const readDb = (resource) => {
-  return async (defaultValue = null) => {
+const readDb = (resource, defaultValue = null) => {
+  return async () => {
     try {
       const jsonDb = await fs.readFile(DB_FILE, "utf-8");
       return JSON.parse(jsonDb)[resource] ?? defaultValue;

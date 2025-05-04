@@ -7,9 +7,17 @@ exports.store = [
       notEmpty: true,
       errorMessage: "Title is required",
     },
-    body: {
+    description: {
       notEmpty: true,
-      errorMessage: "Body is required",
+      errorMessage: "Description is required",
+    },
+    price: {
+      notEmpty: {
+        errorMessage: "Price is required",
+      },
+      isNumeric: {
+        errorMessage: "Price must be a number",
+      },
     },
   }),
   handleValidationErrors,
@@ -22,10 +30,19 @@ exports.update = [
       notEmpty: true,
       errorMessage: "Title cannot be empty",
     },
-    body: {
+    description: {
       optional: true,
       notEmpty: true,
-      errorMessage: "Body cannot be empty",
+      errorMessage: "Description cannot be empty",
+    },
+    price: {
+      optional: true,
+      notEmpty: {
+        errorMessage: "Price is required",
+      },
+      isNumeric: {
+        errorMessage: "Price must be a number",
+      },
     },
   }),
   handleValidationErrors,

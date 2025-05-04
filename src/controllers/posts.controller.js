@@ -1,19 +1,19 @@
 const { readDb, writeDb } = require("../../utils/db");
 
 const RESOURCE = "posts";
-const readResource = readDb(RESOURCE);
+const readResource = readDb(RESOURCE, []);
 const writeResource = writeDb(RESOURCE);
 
-const index = async (req, res) => {
-  const posts = await readResource([]);
+exports.index = async (req, res) => {
+  const posts = await readResource();
   res.status(200).json({
     status: "success",
     data: posts,
   });
 };
 
-const show = async (req, res) => {
-  const posts = await readResource([]);
+exports.show = async (req, res) => {
+  const posts = await readResource();
   const post = posts.find((prod) => prod.id === Number(req.params.id));
 
   if (!post) {
@@ -29,8 +29,8 @@ const show = async (req, res) => {
   });
 };
 
-const store = async (req, res) => {
-  const posts = await readResource([]);
+exports.store = async (req, res) => {
+  const posts = await readResource();
   const newId = (posts[posts.length - 1]?.id ?? 0) + 1;
 
   const newPost = {
@@ -48,8 +48,8 @@ const store = async (req, res) => {
   });
 };
 
-const update = async (req, res) => {
-  const posts = await readResource([]);
+exports.update = async (req, res) => {
+  const posts = await readResource();
   const postIndex = posts.findIndex(
     (prod) => prod.id === Number(req.params.id)
   );
@@ -77,8 +77,8 @@ const update = async (req, res) => {
   });
 };
 
-const destroy = async (req, res) => {
-  const posts = await readResource([]);
+exports.destroy = async (req, res) => {
+  const posts = await readResource();
   const postId = Number(req.params.id);
   const updatedPosts = posts.filter((prod) => prod.id !== postId);
 
@@ -92,12 +92,4 @@ const destroy = async (req, res) => {
   await writeResource(updatedPosts);
 
   res.status(204).send();
-};
-
-module.exports = {
-  index,
-  show,
-  store,
-  update,
-  destroy,
 };
