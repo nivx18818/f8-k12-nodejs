@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const productsController = require("../controllers/products.controller");
-const productsValidator = require("../validators/products.validator")
+const productsController = require("@/controllers/products.controller");
+const productsValidator = require("@/validators/products.validator")
 
 router.get("/", productsController.index);
 router.get("/:id", productsController.show);

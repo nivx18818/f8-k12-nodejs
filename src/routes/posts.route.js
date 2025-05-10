@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const postsController = require("../controllers/posts.controller");
-const postsValidator = require("../validators/posts.validator");
+const postsController = require("@/controllers/posts.controller");
+const postsValidator = require("@/validators/posts.validator");
 
 router.get("/", postsController.index);
 router.get("/:id", postsController.show);

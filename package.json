@@ -4,7 +4,11 @@
   "main": "server.js",
   "dependencies": {
     "express": "^5.1.0",
-    "express-validator": "^7.2.1"
+    "express-validator": "^7.2.1",
+    "module-alias": "^2.2.3"
+  },
+  "_moduleAliases": {
+    "@": "./src"
   },
   "scripts": {
     "dev": "nodemon server.js",

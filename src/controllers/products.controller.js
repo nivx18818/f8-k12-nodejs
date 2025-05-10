@@ -1,4 +1,4 @@
-const { readDb, writeDb } = require("../../utils/db");
+const { readDb, writeDb } = require("@/utils/db");
 
 const RESOURCE = "products";
 const readResource = readDb(RESOURCE, []);
@@ -31,7 +31,7 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
   const products = await readResource();
-  const newId = (products[products.length - 1]?.id ?? 0) + 1;
+  const newId = (products.at(-1)?.id ?? 0) + 1;
 
   const newProduct = {
     id: newId,

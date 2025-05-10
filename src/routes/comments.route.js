@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const commentsController = require("../controllers/comments.controller");
-const commentsValidator = require("../validators/comments.validator")
+const commentsController = require("@/controllers/comments.controller");
+const commentsValidator = require("@/validators/comments.validator");
 
 router.get("/", commentsController.index);
 router.get("/:id", commentsController.show);

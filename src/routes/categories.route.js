@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const categoriesController = require("../controllers/categories.controller");
-const categoriesValidator = require("../validators/categories.validator");
+const categoriesController = require("@/controllers/categories.controller");
+const categoriesValidator = require("@/validators/categories.validator");
 
 router.get("/", categoriesController.index);
 router.get("/:id", categoriesController.show);

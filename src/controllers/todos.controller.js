@@ -1,4 +1,4 @@
-const { readDb, writeDb } = require("../../utils/db");
+const { readDb, writeDb } = require("@/utils/db");
 
 const RESOURCE = "todos";
 const readResource = readDb(RESOURCE, []);
@@ -31,7 +31,7 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
   const todos = await readResource();
-  const newId = (todos[todos.length - 1]?.id ?? 0) + 1;
+  const newId = (todos.at(-1)?.id ?? 0) + 1;
 
   const newTodo = {
     id: newId,
