@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
 };
 
 exports.createByPostId = async (req, res) => {
-  const data = { ...req.body, postId: req.params.id };
+  const data = { ...req.body, postId: Number(req.params.id) };
   const newComment = await commentsService.createByPostId(data);
   return response.success(res, 201, newComment);
 };
