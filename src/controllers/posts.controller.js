@@ -4,19 +4,19 @@ const response = require("@/utils/response");
 
 const throw404 = () => throwError(404, "Post not found");
 
-exports.index = async (req, res) => {
-  const posts = await postsService.index();
+exports.getAll = async (req, res) => {
+  const posts = await postsService.getAll();
   return response.success(res, 200, posts);
 };
 
-exports.show = async (req, res) => {
-  const post = await postsService.show(req.params.id);
+exports.getById = async (req, res) => {
+  const post = await postsService.getById(req.params.id);
   if (!post) throw404();
   return response.success(res, 200, post);
 };
 
-exports.store = async (req, res) => {
-  const newPost = await postsService.store(req.body);
+exports.create = async (req, res) => {
+  const newPost = await postsService.create(req.body);
   return response.success(res, 201, newPost);
 };
 
@@ -26,8 +26,8 @@ exports.update = async (req, res) => {
   return response.success(res, 200, updatedPost);
 };
 
-exports.destroy = async (req, res) => {
-  const updatedPosts = postsService.destroy(req.params.id);
+exports.delete = async (req, res) => {
+  const updatedPosts = postsService.delete(req.params.id);
   if (!updatedPosts) throw404();
   return response.success(res, 204);
 };

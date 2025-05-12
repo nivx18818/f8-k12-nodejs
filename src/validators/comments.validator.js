@@ -1,7 +1,7 @@
 const { checkSchema } = require("express-validator");
 const handleValidationErrors = require("./handleValidationErrors");
 
-exports.store = [
+exports.create = [
   checkSchema({
     postId: {
       notEmpty: {
@@ -15,14 +15,14 @@ exports.store = [
       notEmpty: true,
       errorMessage: "Name is required",
     },
-    email: {
-      notEmpty: {
-        errorMessage: "Email is required",
-      },
-      isEmail: {
-        errorMessage: "Email is not valid",
-      },
-    },
+    // email: {
+    //   notEmpty: {
+    //     errorMessage: "Email is required",
+    //   },
+    //   isEmail: {
+    //     errorMessage: "Email is not valid",
+    //   },
+    // },
     body: {
       notEmpty: true,
       errorMessage: "Body is required",

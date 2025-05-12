@@ -1,95 +1,44 @@
-const { readDb, writeDb } = require("@/utils/db");
+const commentsService = require("@/services/comments.service");
+const throwError = require("@/utils/throwError");
+const response = require("@/utils/response");
 
-const RESOURCE = "comments";
-const readResource = readDb(RESOURCE, []);
-const writeResource = writeDb(RESOURCE);
+const throw404 = () => throwError(404, "Comment not found");
 
-exports.index = async (req, res) => {
-  const comments = await readResource();
-  res.status(200).json({
-    status: "success",
-    data: comments,
-  });
+exports.getAll = async (req, res) => {
+  const comments = await commentsService.getAll();
+  return response.success(res, 200, comments);
 };
 
-exports.show = async (req, res) => {
-  const comments = await readResource();
-  const comment = comments.find((prod) => prod.id === Number(req.params.id));
-
-  if (!comment) {
-    return res.status(404).json({
-      status: "error",
-      message: "Comment not found",
-    });
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: comment,
-  });
+exports.getById = async (req, res) => {
+  const comment = await commentsService.getById(req.params.id);
+  if (!comment) throw404();
+  return response.success(res, 200, comment);
 };
 
-exports.store = async (req, res) => {
-  const comments = await readResource();
-  const newId = (comments.at(-1)?.id ?? 0) + 1;
+exports.getByPostId = async (req, res) => {
+  const commentsByPostId = await commentsService.getByPostId(req.params.id);
+  return response.success(res, 200, commentsByPostId);
+};
 
-  const newComment = {
-    id: newId,
-    title: req.body.title,
-    body: req.body.body,
-  };
+exports.create = async (req, res) => {
+  const newComment = await commentsService.create(req.body);
+  return response.success(res, 201, newComment);
+};
 
-  const newComments = [...comments, newComment];
-  await writeResource(newComments);
-
-  res.status(201).json({
-    status: "success",
-    data: newComment,
-  });
+exports.createByPostId = async (req, res) => {
+  const data = { ...req.body, postId: req.params.id };
+  const newComment = await commentsService.createByPostId(data);
+  return response.success(res, 201, newComment);
 };
 
 exports.update = async (req, res) => {
-  const comments = await readResource();
-  const commentIndex = comments.findIndex(
-    (prod) => prod.id === Number(req.params.id)
-  );
-
-  if (commentIndex === -1) {
-    return res.status(404).json({
-      status: "error",
-      message: "Comment not found",
-    });
-  }
-
-  const updatedComment = { ...comments[commentIndex], ...req.body };
-
-  const updatedComments = [
-    ...comments.slice(0, commentIndex),
-    updatedComment,
-    ...comments.slice(commentIndex + 1),
-  ];
-
-  await writeResource(updatedComments);
-
-  res.status(200).json({
-    status: "success",
-    data: updatedComment,
-  });
+  const updatedComment = await commentsService.update(req.params.id, req.body);
+  if (!updatedComment) throw404();
+  return response.success(res, 200, updatedComment);
 };
 
-exports.destroy = async (req, res) => {
-  const comments = await readResource();
-  const commentId = Number(req.params.id);
-  const updatedComments = comments.filter((prod) => prod.id !== commentId);
-
-  if (updatedComments.length === comments.length) {
-    return res.status(404).json({
-      status: "error",
-      message: "Comment not found",
-    });
-  }
-
-  await writeResource(updatedComments);
-
-  res.status(204).send();
+exports.delete = async (req, res) => {
+  const updatedComments = await commentsService.delete(req.params.id);
+  if (!updatedComments) throw404();
+  return response.success(res, 204);
 };

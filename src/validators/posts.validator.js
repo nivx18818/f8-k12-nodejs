@@ -1,7 +1,7 @@
 const { checkSchema } = require("express-validator");
 const handleValidationErrors = require("./handleValidationErrors");
 
-exports.store = [
+exports.create = [
   checkSchema({
     title: {
       notEmpty: true,

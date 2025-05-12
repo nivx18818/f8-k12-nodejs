@@ -4,11 +4,11 @@ const router = express.Router();
 const commentsController = require("@/controllers/comments.controller");
 const commentsValidator = require("@/validators/comments.validator");
 
-router.get("/", commentsController.index);
-router.get("/:id", commentsController.show);
-router.post("/", commentsValidator.store, commentsController.store);
+router.get("/", commentsController.getAll);
+router.get("/:id", commentsController.getById);
+router.post("/", commentsValidator.create, commentsController.create);
 router.put("/:id", commentsValidator.update, commentsController.update);
 router.patch("/:id", commentsValidator.update, commentsController.update);
-router.delete("/:id", commentsController.destroy);
+router.delete("/:id", commentsController.delete);
 
 module.exports = router;
