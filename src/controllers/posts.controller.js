@@ -5,7 +5,7 @@ const response = require("@/utils/response");
 const throw404 = () => throwError(404, "Post not found");
 
 exports.getAll = async (req, res) => {
-  const posts = await postsService.findAll();
+  const posts = await postsService.findAll(req.query.page, req.query.limit);
   return response.success(res, 200, posts);
 };
 

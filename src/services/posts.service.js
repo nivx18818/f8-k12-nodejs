@@ -1,11 +1,7 @@
-const { readDb, writeDb } = require("@/utils/db");
+const postsModel = require("@/models/posts.model");
 
-const RESOURCE = "posts";
-const readResource = readDb(RESOURCE, []);
-const writeResource = writeDb(RESOURCE);
-
-exports.findAll = async () => {
-  const posts = await readResource();
+exports.findAll = async (page = 1, limit = 10) => {
+  const posts = await postsModel.queryAll(page, limit);
   return posts;
 };
 
