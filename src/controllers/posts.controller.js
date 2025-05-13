@@ -5,12 +5,12 @@ const response = require("@/utils/response");
 const throw404 = () => throwError(404, "Post not found");
 
 exports.getAll = async (req, res) => {
-  const posts = await postsService.getAll();
+  const posts = await postsService.findAll();
   return response.success(res, 200, posts);
 };
 
 exports.getById = async (req, res) => {
-  const post = await postsService.getById(req.params.id);
+  const post = await postsService.findById(req.params.id);
   if (!post) throw404();
   return response.success(res, 200, post);
 };

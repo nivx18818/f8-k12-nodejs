@@ -4,19 +4,19 @@ const RESOURCE = "posts";
 const readResource = readDb(RESOURCE, []);
 const writeResource = writeDb(RESOURCE);
 
-exports.getAll = async () => {
+exports.findAll = async () => {
   const posts = await readResource();
   return posts;
 };
 
-exports.getById = async (id) => {
-  const posts = await this.getAll();
+exports.findById = async (id) => {
+  const posts = await this.findAll();
   const post = posts.find((prod) => prod.id === Number(id));
   return post;
 };
 
 exports.create = async (data) => {
-  const posts = await this.getAll();
+  const posts = await this.findAll();
   const newId = (posts.at(-1)?.id ?? 0) + 1;
 
   const newPost = {
@@ -32,18 +32,18 @@ exports.create = async (data) => {
 };
 
 exports.update = async (id, data) => {
-  const posts = await this.getAll();
-  const postGetPosts = posts.findGetPosts((prod) => prod.id === Number(id));
+  const posts = await this.findAll();
+  const postIndex = posts.findIndex((prod) => prod.id === Number(id));
 
-  if (postGetPosts === -1) {
+  if (postIndex === -1) {
     return null;
   }
 
-  const updatedPost = { ...posts[postGetPosts], ...data };
+  const updatedPost = { ...posts[postIndex], ...data };
   const updatedPosts = [
-    ...posts.slice(0, postGetPosts),
+    ...posts.slice(0, postIndex),
     updatedPost,
-    ...posts.slice(postGetPosts + 1),
+    ...posts.slice(postIndex + 1),
   ];
 
   await writeResource(updatedPosts);
@@ -51,7 +51,7 @@ exports.update = async (id, data) => {
 };
 
 exports.delete = async (id) => {
-  const posts = await this.getAll();
+  const posts = await this.findAll();
   const updatedPosts = posts.filter((prod) => prod.id !== Number(id));
 
   if (updatedPosts.length === posts.length) {

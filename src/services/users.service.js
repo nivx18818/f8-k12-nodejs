@@ -1,18 +1,18 @@
 const usersModel = require("@/models/users.model");
 
-exports.getUsers = async () => {
-  const users = await usersModel.getUsers();
+exports.findUsers = async () => {
+  const users = await usersModel.findUsers();
   return users;
 };
 
-exports.getUserById = async (id) => {
-  const users = await this.getUsers();
+exports.findUserById = async (id) => {
+  const users = await this.findUsers();
   const user = users.find((prod) => prod.id === Number(id));
   return user;
 };
 
 exports.addUser = async (data) => {
-  const users = await this.getUsers();
+  const users = await this.findUsers();
   const newId = (users.at(-1)?.id ?? 0) + 1;
 
   const newUser = {
@@ -28,18 +28,18 @@ exports.addUser = async (data) => {
 };
 
 exports.updateUser = async (id, data) => {
-  const users = await this.getUsers();
-  const userGetUsers = users.findGetUsers((prod) => prod.id === Number(id));
+  const users = await this.findUsers();
+  const userIndex = users.findIndex((prod) => prod.id === Number(id));
 
-  if (userGetUsers === -1) {
+  if (userIndex === -1) {
     return null;
   }
 
-  const updatedUser = { ...users[userGetUsers], ...data };
+  const updatedUser = { ...users[userIndex], ...data };
   const updatedUsers = [
-    ...users.slice(0, userGetUsers),
+    ...users.slice(0, userIndex),
     updatedUser,
-    ...users.slice(userGetUsers + 1),
+    ...users.slice(userIndex + 1),
   ];
 
   await writeResource(updatedUsers);
@@ -47,7 +47,7 @@ exports.updateUser = async (id, data) => {
 };
 
 exports.deleteUser = async (id) => {
-  const users = await this.getUsers();
+  const users = await this.findUsers();
   const updatedUsers = users.filter((prod) => prod.id !== Number(id));
 
   if (updatedUsers.length === users.length) {

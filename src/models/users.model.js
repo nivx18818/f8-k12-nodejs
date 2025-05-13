@@ -1,6 +1,6 @@
 const db = require("@/configs/db");
 
-exports.getUsers = async () => {
+exports.queryAll = async () => {
   const [users] = await db.query("SELECT * FROM users");
   return users;
 };
