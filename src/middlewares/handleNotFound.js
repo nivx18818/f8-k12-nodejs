@@ -1,7 +1,7 @@
 const response = require("@/utils/response");
 
-const notFoundHandler = (req, res) => {
+const handleNotFound = (req, res) => {
   response.error(res, 404, "Resource not found");
 };
 
-module.exports = notFoundHandler;
+module.exports = handleNotFound;

@@ -1,95 +1,33 @@
-const { readDb, writeDb } = require("@/utils/db");
+const productsService = require("@/services/products.service");
+const throwError = require("@/utils/throwError");
+const response = require("@/utils/response");
 
-const RESOURCE = "products";
-const readResource = readDb(RESOURCE, []);
-const writeResource = writeDb(RESOURCE);
+const throw404 = () => throwError(404, "Product not found");
 
 exports.index = async (req, res) => {
-  const products = await readResource();
-  res.status(200).json({
-    status: "success",
-    data: products,
-  });
+  const products = await productsService.getProducts();
+  return response.success(res, 200, products);
 };
 
 exports.show = async (req, res) => {
-  const products = await readResource();
-  const product = products.find((prod) => prod.id === Number(req.params.id));
-
-  if (!product) {
-    return res.status(404).json({
-      status: "error",
-      message: "Product not found",
-    });
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: product,
-  });
+  const product = await productsService.getProductById(req.params.id);
+  if (!product) throw404();
+  return response.success(res, 200, product);
 };
 
 exports.store = async (req, res) => {
-  const products = await readResource();
-  const newId = (products.at(-1)?.id ?? 0) + 1;
-
-  const newProduct = {
-    id: newId,
-    title: req.body.title,
-    body: req.body.body,
-  };
-
-  const newProducts = [...products, newProduct];
-  await writeResource(newProducts);
-
-  res.status(201).json({
-    status: "success",
-    data: newProduct,
-  });
+  const newProduct = await productsService.addProduct(req.body);
+  return response.success(res, 201, newProduct);
 };
 
 exports.update = async (req, res) => {
-  const products = await readResource();
-  const productIndex = products.findIndex(
-    (prod) => prod.id === Number(req.params.id)
-  );
-
-  if (productIndex === -1) {
-    return res.status(404).json({
-      status: "error",
-      message: "Product not found",
-    });
-  }
-
-  const updatedProduct = { ...products[productIndex], ...req.body };
-
-  const updatedProducts = [
-    ...products.slice(0, productIndex),
-    updatedProduct,
-    ...products.slice(productIndex + 1),
-  ];
-
-  await writeResource(updatedProducts);
-
-  res.status(200).json({
-    status: "success",
-    data: updatedProduct,
-  });
+  const updatedProduct = await productsService.updateProduct(req.params.id, req.body);
+  if (!updatedProduct) throw404();
+  return response.success(res, 200, updatedProduct);
 };
 
 exports.destroy = async (req, res) => {
-  const products = await readResource();
-  const productId = Number(req.params.id);
-  const updatedProducts = products.filter((prod) => prod.id !== productId);
-
-  if (updatedProducts.length === products.length) {
-    return res.status(404).json({
-      status: "error",
-      message: "Product not found",
-    });
-  }
-
-  await writeResource(updatedProducts);
-
-  res.status(204).send();
+  const updatedProducts = productsService.deleteProduct(req.params.id);
+  if (!updatedProducts) throw404();
+  return response.success(res, 204);
 };

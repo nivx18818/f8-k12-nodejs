@@ -1,0 +1,14 @@
+const express = require("express");
+const router = express.Router();
+
+const usersController = require("@/controllers/users.controller");
+// const usersValidator = require("@/validators/users.validator");
+
+router.get("/", usersController.index);
+router.get("/:id", usersController.show);
+router.post("/", usersController.store);
+router.put("/:id", usersController.update);
+router.patch("/:id", usersController.update);
+router.delete("/:id", usersController.destroy);
+
+module.exports = router;
