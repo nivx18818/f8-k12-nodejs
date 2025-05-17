@@ -1,18 +1,17 @@
 const usersModel = require("@/models/users.model");
 
-exports.findUsers = async () => {
-  const users = await usersModel.findUsers();
+exports.findAll = async () => {
+  const users = await usersModel.queryAll();
   return users;
 };
 
-exports.findUserById = async (id) => {
-  const users = await this.findUsers();
-  const user = users.find((prod) => prod.id === Number(id));
+exports.findById = async (id) => {
+  const user = await usersModel.queryById();
   return user;
 };
 
-exports.addUser = async (data) => {
-  const users = await this.findUsers();
+exports.create = async (data) => {
+  const users = await this.findAll();
   const newId = (users.at(-1)?.id ?? 0) + 1;
 
   const newUser = {
@@ -27,8 +26,8 @@ exports.addUser = async (data) => {
   return newUser;
 };
 
-exports.updateUser = async (id, data) => {
-  const users = await this.findUsers();
+exports.update = async (id, data) => {
+  const users = await this.findAll();
   const userIndex = users.findIndex((prod) => prod.id === Number(id));
 
   if (userIndex === -1) {
@@ -46,8 +45,8 @@ exports.updateUser = async (id, data) => {
   return updatedUser;
 };
 
-exports.deleteUser = async (id) => {
-  const users = await this.findUsers();
+exports.delete = async (id) => {
+  const users = await this.findAll();
   const updatedUsers = users.filter((prod) => prod.id !== Number(id));
 
   if (updatedUsers.length === users.length) {

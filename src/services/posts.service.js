@@ -6,8 +6,7 @@ exports.findAll = async (page = 1, limit = 10) => {
 };
 
 exports.findById = async (id) => {
-  const posts = await this.findAll();
-  const post = posts.find((prod) => prod.id === Number(id));
+  const post = await postsModel.queryById(id);
   return post;
 };
 
@@ -28,21 +27,14 @@ exports.create = async (data) => {
 };
 
 exports.update = async (id, data) => {
-  const posts = await this.findAll();
-  const postIndex = posts.findIndex((prod) => prod.id === Number(id));
+  const post = this.findById(id);
 
-  if (postIndex === -1) {
+  if (!post) {
     return null;
   }
 
-  const updatedPost = { ...posts[postIndex], ...data };
-  const updatedPosts = [
-    ...posts.slice(0, postIndex),
-    updatedPost,
-    ...posts.slice(postIndex + 1),
-  ];
-
-  await writeResource(updatedPosts);
+  const updatedPost = { ...post, ...data };
+  await postsModel.update(id, updatedPost)
   return updatedPost;
 };
 

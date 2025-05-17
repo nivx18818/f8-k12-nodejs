@@ -7,4 +7,9 @@ const throwError = (status, message, errors) => {
   });
 };
 
-module.exports = throwError;
+const throw404 = (message) => throwError(404, message);
+
+module.exports = {
+  throwError,
+  throw404,
+};

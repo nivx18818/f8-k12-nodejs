@@ -4,6 +4,9 @@ const router = express.Router();
 const postsController = require("@/controllers/posts.controller");
 const commentsController = require("@/controllers/comments.controller");
 const postsValidator = require("@/validators/posts.validator");
+const attachResourceLoaders = require("@/utils/attachResourceLoaders");
+
+attachResourceLoaders(router, "posts");
 
 router.get("/", postsController.getAll);
 router.get("/:id", postsController.getById);
