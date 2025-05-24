@@ -10,7 +10,6 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
   const post = await postsService.findById(req.params.id);
-  console.log(post);
   res.render("admin/posts/show", {
     title: "Post detail",
     post,

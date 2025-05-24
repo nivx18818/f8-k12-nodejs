@@ -6,7 +6,7 @@ exports.findAll = async () => {
 };
 
 exports.findById = async (id) => {
-  const user = await usersModel.queryById();
+  const user = await usersModel.queryById(id);
   return user;
 };
 

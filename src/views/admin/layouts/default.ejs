@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Users | Admin Dashboard</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/dashboard.css" />
+        <link rel="stylesheet" href="/css/users.css" />
+        <style>
+            .error-text {
+                color: #f44336;
+                font-size: 12px;
+                margin-top: 5px;
+                display: none;
+            }
+
+            .form-control.error {
+                border-color: #f44336;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <%- include("../partials/sidebar") %>
+
+        <!-- Main Content -->
+        <main><%- body %></main>
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal" id="confirmDeleteModal">
+            <div class="modal-content">
+                <h3 class="modal-title">Confirm Delete</h3>
+                <div class="modal-body">
+                    Are you sure you want to delete "<span
+                        id="deleteUserName"
+                    ></span
+                    >"? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        id="cancelDelete"
+                        class="btn-secondary"
+                    >
+                        Cancel
+                    </button>
+                    <button type="button" id="confirmDelete" class="btn-danger">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/validation.js"></script>
+        <script src="/js/users.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize form validation
+                if (typeof initFormValidation === "function") {
+                    initFormValidation("filterForm");
+                }
+
+                // Update existing form submission handler in users.js
+                const originalFilterFormHandler =
+                    document.getElementById("filterForm").onsubmit;
+
+                // Override form submission handler
+                document
+                    .getElementById("filterForm")
+                    .addEventListener("submit", function (event) {
+                        event.preventDefault();
+
+                        // Validate form first
+                        if (validateForm("filterForm")) {
+                            // Proceed with original filter submission logic
+                            const name =
+                                document.getElementById("filterName").value;
+                            const category =
+                                document.getElementById("filterCategory").value;
+                            const status =
+                                document.getElementById("filterStatus").value;
+
+                            console.log("Filtering with:", {
+                                name,
+                                category,
+                                status,
+                            });
+
+                            // For demo: show loading state
+                            document
+                                .querySelector(".table-container")
+                                .classList.add("loading");
+
+                            // Simulate API call with timeout
+                            setTimeout(() => {
+                                // In a real app, this would update the table with filtered results
+                                document
+                                    .querySelector(".table-container")
+                                    .classList.remove("loading");
+                            }, 500);
+                        }
+                    });
+
+                // Validate the alphanumeric nature of the user name field
+                document
+                    .getElementById("filterName")
+                    .addEventListener("keyup", function () {
+                        const input = this;
+                        const value = input.value.trim();
+
+                        // Only validate if there's a value (the field is not required)
+                        if (value !== "" && !/^[a-zA-Z0-9\s]+$/.test(value)) {
+                            document.getElementById(
+                                "filterNameError"
+                            ).style.display = "block";
+                            document.getElementById(
+                                "filterNameError"
+                            ).textContent =
+                                "User name can only contain letters, numbers, and spaces.";
+                            input.classList.add("error");
+                        } else {
+                            document.getElementById(
+                                "filterNameError"
+                            ).style.display = "none";
+                            input.classList.remove("error");
+                        }
+                    });
+            });
+        </script>
+    </body>
+</html>

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const usersController = require("@/controllers/users.controller");
+const usersController = require("@/controllers/api/users.controller");
 // const usersValidator = require("@/validators/users.validator");
 
 router.get("/", usersController.getAll);

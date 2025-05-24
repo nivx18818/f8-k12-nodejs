@@ -1,0 +1,82 @@
+<div class="content-header">
+    <h1>Users</h1>
+    <a href="create-user.html" class="btn-primary">
+        <i class="fas fa-plus"></i> Add New User
+    </a>
+</div>
+
+<!-- Users Table -->
+<div class="table-container">
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- User rows -->
+            <% for (const user of users.slice(0, 6)) { %>
+            <tr data-id="1">
+                <td>
+                    <div style="display: flex; align-items: center">
+                        <img
+                            src="https://picsum.photos/50/50"
+                            alt="User"
+                            class="user-image"
+                        />
+                        <div style="margin-left: 15px">
+                            <div class="user-name"><%= user.name %></div>
+                            <div class="user-username">
+                                <%= user.username %>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="badge badge-gender"
+                        ><%= user.gender ?? 'N/A' %></span
+                    >
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <a
+                            href="users/<%= user.id %>"
+                            class="action-btn view"
+                            title="View"
+                        >
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="#" class="action-btn edit" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a
+                            href="#"
+                            class="action-btn delete delete-user"
+                            title="Delete"
+                            data-id="1"
+                            data-name="Wireless Headphones"
+                        >
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+        <div class="pagination-info">Showing 1-6 of 56 users</div>
+        <ul class="pagination">
+            <li><a href="#" data-page="1" class="active">1</a></li>
+            <li><a href="#" data-page="2">2</a></li>
+            <li><a href="#" data-page="3">3</a></li>
+            <li><a href="#" data-page="4">4</a></li>
+            <li><a href="#" data-page="5">5</a></li>
+            <li><a href="#" data-page="6">6</a></li>
+        </ul>
+    </div>
+</div>
