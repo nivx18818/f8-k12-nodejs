@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const usersController = require("@/controllers/api/users.controller");
-// const usersValidator = require("@/validators/users.validator");
+const usersValidator = require("@/validators/users.validator");
+const attachResourceLoaders = require("@/utils/attachResourceLoaders");
 
-router.get("/", usersController.getAll);
+attachResourceLoaders(router, "users");
+
+router.get("/", usersController.getList);
 router.get("/:id", usersController.getById);
 router.post("/", usersController.create);
 router.put("/:id", usersController.update);

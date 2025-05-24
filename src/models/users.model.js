@@ -1,11 +1,11 @@
 const db = require("@/configs/db");
 
-exports.queryAll = async () => {
+exports.findAll = async () => {
   const [users] = await db.query("SELECT * FROM users");
   return users;
 };
 
-exports.queryById = async (id) => {
+exports.findById = async (id) => {
   const [users] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
   return users[0];
 };

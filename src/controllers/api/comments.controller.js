@@ -4,19 +4,19 @@ const response = require("@/utils/response");
 
 const throw404 = () => throwError(404, "Comment not found");
 
-exports.getAll = async (req, res) => {
-  const comments = await commentsService.findAll();
+exports.getList = async (req, res) => {
+  const comments = await commentsService.getAll();
   return response.success(res, 200, comments);
 };
 
 exports.getById = async (req, res) => {
-  const comment = await commentsService.findById(req.params.id);
+  const comment = await commentsService.getById(req.params.id);
   if (!comment) throw404();
   return response.success(res, 200, comment);
 };
 
 exports.getByPostId = async (req, res) => {
-  const commentsByPostId = await commentsService.findByPostId(req.params.id);
+  const commentsByPostId = await commentsService.getByPostId(req.params.id);
   return response.success(res, 200, commentsByPostId);
 };
 

@@ -3,8 +3,11 @@ const router = express.Router();
 
 const commentsController = require("@/controllers/api/comments.controller");
 const commentsValidator = require("@/validators/comments.validator");
+const attachResourceLoaders = require("@/utils/attachResourceLoaders");
 
-router.get("/", commentsController.getAll);
+attachResourceLoaders(router, "comments");
+
+router.get("/", commentsController.getList);
 router.get("/:id", commentsController.getById);
 router.post("/", commentsValidator.create, commentsController.create);
 router.put("/:id", commentsValidator.update, commentsController.update);

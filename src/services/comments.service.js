@@ -4,27 +4,27 @@ const RESOURCE = "comments";
 const readResource = readDb(RESOURCE, []);
 const writeResource = writeDb(RESOURCE);
 
-exports.findAll = async () => {
+exports.getAll = async () => {
   const comments = await readResource();
   return comments;
 };
 
-exports.findByPostId = async (postId) => {
-  const comments = await this.findAll();
+exports.getByPostId = async (postId) => {
+  const comments = await this.getAll();
   const commentsByPostId = comments.filter(
     (comment) => comment.postId === Number(postId)
   );
   return commentsByPostId;
 };
 
-exports.findById = async (id) => {
-  const comments = await this.findAll();
+exports.getById = async (id) => {
+  const comments = await this.getAll();
   const comment = comments.find((prod) => prod.id === Number(id));
   return comment;
 };
 
 exports.create = async (data) => {
-  const comments = await this.findAll();
+  const comments = await this.getAll();
   const newId = (comments.at(-1)?.id ?? 0) + 1;
 
   const newComment = {
@@ -41,7 +41,7 @@ exports.create = async (data) => {
 };
 
 exports.createByPostId = async (data) => {
-  const comments = await this.findAll();
+  const comments = await this.getAll();
   const newId = (comments.at(-1)?.id ?? 0) + 1;
 
   const newComment = {
@@ -58,7 +58,7 @@ exports.createByPostId = async (data) => {
 };
 
 exports.update = async (id, data) => {
-  const comments = await this.findAll();
+  const comments = await this.getAll();
   const commentIndex = comments.findIndex((prod) => prod.id === Number(id));
 
   if (commentIndex === -1) {
@@ -77,7 +77,7 @@ exports.update = async (id, data) => {
 };
 
 exports.delete = async (id) => {
-  const comments = await this.findAll();
+  const comments = await this.getAll();
   const updatedComments = comments.filter((prod) => prod.id !== Number(id));
 
   if (updatedComments.length === comments.length) {

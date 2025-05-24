@@ -1,9 +1,9 @@
 const postsService = require("@/services/posts.service");
 const response = require("@/utils/response");
 
-exports.getAll = async (req, res) => {
+exports.getList = async (req, res) => {
   const { page, limit } = req.query;
-  const { posts } = await postsService.findAll(page, limit);
+  const { posts } = await postsService.getAll(page, limit);
   return response.success(res, 200, posts);
 };
 

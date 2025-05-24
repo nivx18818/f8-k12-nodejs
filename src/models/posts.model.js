@@ -1,6 +1,6 @@
 const db = require("@/configs/db");
 
-exports.queryAll = async (page = 1, limit = 10) => {
+exports.findAll = async (page = 1, limit = 10) => {
   const [posts] = await db.query("SELECT * FROM posts LIMIT ? OFFSET ?", [
     limit,
     (page - 1) * limit,
@@ -9,12 +9,12 @@ exports.queryAll = async (page = 1, limit = 10) => {
   return { posts, total };
 };
 
-exports.queryById = async (id) => {
+exports.findById = async (id) => {
   const [posts] = await db.query("SELECT * FROM posts WHERE id = ?", [id]);
   return posts[0];
 };
 
-exports.queryNumberOfPosts = async () => {
+exports.findNumberOfPosts = async () => {
   const [[{ total }]] = await db.query("SELECT COUNT(*) AS total FROM posts");
   return Number(total);
 };

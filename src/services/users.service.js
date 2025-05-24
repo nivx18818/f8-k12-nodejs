@@ -1,17 +1,17 @@
 const usersModel = require("@/models/users.model");
 
-exports.findAll = async () => {
-  const users = await usersModel.queryAll();
+exports.getAll = async () => {
+  const users = await usersModel.findAll();
   return users;
 };
 
-exports.findById = async (id) => {
-  const user = await usersModel.queryById(id);
+exports.getById = async (id) => {
+  const user = await usersModel.findById(id);
   return user;
 };
 
 exports.create = async (data) => {
-  const users = await this.findAll();
+  const users = await this.getAll();
   const newId = (users.at(-1)?.id ?? 0) + 1;
 
   const newUser = {
@@ -27,7 +27,7 @@ exports.create = async (data) => {
 };
 
 exports.update = async (id, data) => {
-  const users = await this.findAll();
+  const users = await this.getAll();
   const userIndex = users.findIndex((prod) => prod.id === Number(id));
 
   if (userIndex === -1) {
@@ -46,7 +46,7 @@ exports.update = async (id, data) => {
 };
 
 exports.delete = async (id) => {
-  const users = await this.findAll();
+  const users = await this.getAll();
   const updatedUsers = users.filter((prod) => prod.id !== Number(id));
 
   if (updatedUsers.length === users.length) {

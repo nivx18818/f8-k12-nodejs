@@ -4,13 +4,13 @@ const response = require("@/utils/response");
 
 const throw404 = () => throwError(404, "User not found");
 
-exports.getAll = async (req, res) => {
-  const users = await usersService.findAll();
+exports.getList = async (req, res) => {
+  const users = await usersService.getAll();
   return response.success(res, 200, users);
 };
 
 exports.getById = async (req, res) => {
-  const user = await usersService.findById(req.params.id);
+  const user = await usersService.getById(req.params.id);
   if (!user) throw404();
   return response.success(res, 200, user);
 };

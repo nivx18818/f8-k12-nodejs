@@ -8,7 +8,7 @@ const attachResourceLoaders = require("@/utils/attachResourceLoaders");
 
 attachResourceLoaders(router, "posts");
 
-router.get("/", postsController.getAll);
+router.get("/", postsController.getList);
 router.get("/:id", postsController.getById);
 router.post("/", postsValidator.create, postsController.create);
 router.put("/:id", postsValidator.update, postsController.update);
