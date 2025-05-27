@@ -19,6 +19,11 @@ exports.findNumberOfPosts = async () => {
   return Number(total);
 };
 
+exports.create = async (newPost) => {
+  const [result] = await db.query("INSERT INTO posts SET ?", [newPost]);
+  return { ...newPost, id: result.insertId };
+}
+
 exports.update = async (id, updatedPost) => {
   await db.query("UPDATE posts SET ? WHERE id = ?", [
     updatedPost,

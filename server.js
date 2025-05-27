@@ -13,6 +13,7 @@ const port = 3001;
 
 app.use(express.static("public"));
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(expressEjsLayouts);
 
 app.set("view engine", "ejs");

@@ -2,7 +2,7 @@ const { throw404 } = require("./throwError");
 
 const models = {
   posts: ["post", require("@/models/posts.model")],
-  comments: ["comment", require("@/models/comments.model")],
+  // comments: ["comment", require("@/models/comments.model")],
   users: ["user", require("@/models/users.model")],
 };
 

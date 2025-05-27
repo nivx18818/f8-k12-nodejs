@@ -11,18 +11,7 @@ exports.getById = async (id) => {
 };
 
 exports.create = async (data) => {
-  const posts = await this.getAll();
-  const newId = (posts.at(-1)?.id ?? 0) + 1;
-
-  const newPost = {
-    id: newId,
-    title: data.title,
-    body: data.body,
-  };
-
-  const newPosts = [...posts, newPost];
-  await writeResource(newPosts);
-
+  const newPost = await postsModel.create(data);
   return newPost;
 };
 

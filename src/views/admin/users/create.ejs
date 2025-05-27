@@ -1,0 +1,238 @@
+<div class="content-header">
+    <h1>Create New User</h1>
+    <a href="/admin/users" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Users
+    </a>
+</div>
+
+<!-- Success Message -->
+<div id="successMessage" class="message message-success" style="display: none">
+    <i class="fas fa-check-circle"></i>
+    <span data-message-text>User has been created successfully.</span>
+</div>
+
+<!-- Create User Form -->
+<form id="createUserForm" class="card" method="post" action="/admin/users">
+    <div class="card-header">
+        <h3>User Information</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-section">
+            <h3>Personal Information</h3>
+            <div class="form-group">
+                <label for="userName">Full Name*</label>
+                <input
+                    type="text"
+                    id="userName"
+                    name="name"
+                    value="<%= old?.name %>"
+                    class="form-control"
+                    required
+                    data-validate="name"
+                />
+                <% if (errors?.name) { %>
+                <span class="error-text" id="userNameError">
+                    <%= errors.name %>
+                </span>
+                <% } %>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="userEmail">Email*</label>
+                    <input
+                        type="email"
+                        id="userEmail"
+                        name="email"
+                        value="<%= old?.email %>"
+                        class="form-control"
+                        required
+                    />
+                    <% if (errors?.email) { %>
+                    <span class="error-text" id="userEmailError">
+                        <%= errors.email %>
+                    </span>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                    <label for="userPhone">Phone</label>
+                    <input
+                        type="tel"
+                        id="userPhone"
+                        name="phone"
+                        value="<%= old?.phone %>"
+                        class="form-control"
+                        data-validate="phone"
+                    />
+                    <% if (errors?.phone) { %>
+                    <span class="error-text" id="userPhoneError">
+                        <%= errors.phone %>
+                    </span>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="userAddress">Address</label>
+                <textarea
+                    id="userAddress"
+                    name="address"
+                    value="<%= old?.address %>"
+                    class="form-control"
+                    rows="2"
+                ></textarea>
+                <% if (errors?.address) { %>
+                <span class="error-text" id="userAddressError">
+                    <%= errors.address %>
+                </span>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Account Information</h3>
+            <div class="form-group">
+                <label for="userUsername">Username*</label>
+                <input
+                    type="text"
+                    id="userUsername"
+                    name="username"
+                    value="<%= old?.username %>"
+                    class="form-control"
+                    required
+                    data-validate="username"
+                />
+                <% if (errors?.username) { %>
+                <span class="error-text" id="userUsernameError">
+                    <%= errors.username %>
+                </span>
+                <% } %>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="userRole">Role*</label>
+                    <select
+                        id="userRole"
+                        name="userRole"
+                        class="form-control"
+                        required
+                    >
+                        <option value="">Select Role</option>
+                        <option value="admin">Administrator</option>
+                        <option value="editor">Editor</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <% if (errors?.role) { %>
+                    <span class="error-text" id="userRoleError">
+                        <%= errors.role %>
+                    </span>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                    <label for="userStatus">Status*</label>
+                    <select
+                        id="userStatus"
+                        name="userStatus"
+                        class="form-control"
+                        required
+                    >
+                        <option value="">Select Status</option>
+                        <option value="active" selected>Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                    <% if (errors?.status) { %>
+                    <span class="error-text" id="userStatusError">
+                        <%= errors.status %>
+                    </span>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Password</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="userPassword">Password*</label>
+                    <input
+                        type="password"
+                        id="userPassword"
+                        name="password"
+                        class="form-control"
+                        required
+                        data-validate="password"
+                    />
+                    <% if (errors?.password) { %>
+                    <span class="error-text" id="userPasswordError">
+                        <%= errors.password %>
+                    </span>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                    <label for="userConfirmPassword">Confirm Password*</label>
+                    <input
+                        type="password"
+                        id="userConfirmPassword"
+                        name="userConfirmPassword"
+                        class="form-control"
+                        required
+                    />
+                    <% if (errors?.confirmPassword) { %>
+                    <span class="error-text" id="userConfirmPasswordError">
+                        <%= errors.confirmPassword %>
+                    </span>
+                    <% } %>
+                </div>
+            </div>
+            <p
+                class="form-help-text"
+                style="color: #666; font-size: 13px; margin-top: 5px"
+            >
+                Password must be at least 8 characters and include uppercase,
+                lowercase, number, and special character.
+            </p>
+        </div>
+
+        <div class="form-section">
+            <h3>Notification Settings</h3>
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input
+                        type="checkbox"
+                        id="emailNotifications"
+                        name="emailNotifications"
+                        checked
+                    />
+                    <label for="emailNotifications"
+                        >Send welcome email to the user</label
+                    >
+                </div>
+                <div class="checkbox-group">
+                    <input
+                        type="checkbox"
+                        id="adminNotifications"
+                        name="adminNotifications"
+                        checked
+                    />
+                    <label for="adminNotifications"
+                        >Notify administrators about this new user</label
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">
+                Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Create User
+            </button>
+        </div>
+    </div>
+</form>
