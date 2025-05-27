@@ -1,14 +1,307 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body>
-        <h1><%= title %></h1>
-        <h2><%= post.title %></h2>
-        <small><%= post.created_at %></small>
-        <p><%- post.content %></p>
-    </body>
-</html>
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h1>Admin Dashboard</h1>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+            <a href="categories.html" class="menu-item">
+                <i class="fas fa-tags"></i>
+                Categories
+            </a>
+            <a href="products.html" class="menu-item active">
+                <i class="fas fa-shopping-cart"></i>
+                Products
+            </a>
+            <a href="topics.html" class="menu-item">
+                <i class="fas fa-bookmark"></i>
+                Topics
+            </a>
+            <a href="posts.html" class="menu-item">
+                <i class="fas fa-file-alt"></i>
+                Posts
+            </a>
+            <a href="comments.html" class="menu-item">
+                <i class="fas fa-comments"></i>
+                Comments
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="fas fa-user"></i>
+                Users
+            </a>
+            <a href="analytics.html" class="menu-item">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
+            </a>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </nav>
+
+        <div class="user-profile" id="userProfileDropdown">
+            <div class="avatar">JD</div>
+            <div class="user-info">
+                <p>John Doe</p>
+                <small>Administrator</small>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+            <div class="user-dropdown">
+                <a href="account-settings.html" class="dropdown-item">
+                    <i class="fas fa-user-cog"></i> Account Settings
+                </a>
+                <a href="login.html" class="dropdown-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>                    </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <div class="content-header">
+            <h1>Product Detail</h1>
+            <div>
+                <a
+                    href="products.html"
+                    class="btn btn-secondary"
+                    id="backButton"
+                >
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <a href="#" class="btn btn-primary" id="editButton">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            </div>
+        </div>
+
+        <!-- Item Details Container -->
+        <div class="card">
+            <div class="card-header">
+                <h3 id="itemTitle">Loading...</h3>
+            </div>
+            <div class="card-body">
+                <div id="itemContent">
+                    <!-- Will be populated with JavaScript -->
+                    <div class="loading-spinner">
+                        Loading details...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity History -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Activity History</h3>
+            </div>
+            <div class="card-body">
+                <ul class="activity-list" id="activityList">
+                    <!-- Will be populated with JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="assets/js/common.js"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get item ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const itemId = urlParams.get("id");
+
+        // Set edit button URL
+        const editButton = document.getElementById("editButton");
+        editButton.href = `edit-product.html?id=${itemId}`;
+
+        // Load product details
+        loadProductDetails(itemId);
+
+        // Load activity history
+        loadActivityHistory(itemId);
+    });
+
+    // Load product details
+    function loadProductDetails(itemId) {
+        // In a real application, this would fetch data from an API
+        // For demonstration, we'll use mock data
+
+        // Mock product data
+        const itemData = {
+            id: itemId,
+            name: "Wireless Headphones",
+            sku: "P100125",
+            price: 199.99,
+            stock: 75,
+            category: "Electronics",
+            status: "Active",
+            description:
+                "High-quality wireless headphones with noise cancellation and long battery life.",
+            image: "https://via.placeholder.com/300",
+            dateAdded: "2023-03-10",
+            tags: ["electronics", "audio", "wireless"],
+        };
+
+        // Update page title and header
+        document.title = `Product: ${itemData.name} | Admin Dashboard`;
+        document.getElementById("itemTitle").textContent =
+            itemData.name;
+
+        // Create product detail HTML
+        const productHTML = `
+            <div class="detail-header" style="display: flex; margin-bottom: 20px;">
+                <div style="flex: 0 0 300px;">
+                    <img src="${itemData.image}" alt="${
+            itemData.name
+        }" style="width: 100%; border-radius: 8px;">
+                </div>
+                <div style="margin-left: 20px; flex: 1;">
+                    <h2 style="margin: 0;">${itemData.name}</h2>
+                    <p style="margin: 5px 0; color: #666;">SKU: ${
+                        itemData.sku
+                    }</p>
+                    <div style="margin: 15px 0;">
+                        <span class="badge badge-success">${
+                            itemData.status
+                        }</span>
+                        <span class="badge" style="background-color: rgba(58, 134, 255, 0.1); color: #3a86ff;">${
+                            itemData.category
+                        }</span>
+                    </div>
+                    <h3 class="item-value" style="font-size: 24px; margin: 15px 0;">${formatCurrency(
+                        itemData.price
+                    )}</h3>
+                    <p><strong>Stock:</strong> ${
+                        itemData.stock
+                    } units</p>
+                    <p><strong>Date Added:</strong> ${formatDate(
+                        itemData.dateAdded
+                    )}</p>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Product Description</h3>
+                <p>${itemData.description}</p>
+            </div>
+
+            <div class="detail-section">
+                <h3>Product Tags</h3>
+                <div>
+                    ${itemData.tags
+                        .map(
+                            (tag) => `
+                        <span class="badge" style="background-color: #eee; color: #555; margin-right: 5px;">${tag}</span>
+                    `
+                        )
+                        .join("")}
+                </div>
+            </div>
+        `;
+
+        document.getElementById("itemContent").innerHTML = productHTML;
+    }
+
+    // Load activity history
+    function loadActivityHistory(itemId) {
+        // In a real application, this would fetch data from an API
+        // For demonstration, we'll use mock data
+
+        const activityData = [
+            {
+                action: "Created",
+                date: "2023-05-15 14:30",
+                user: "Admin",
+            },
+            {
+                action: "Updated",
+                date: "2023-06-20 10:15",
+                user: "John Doe",
+            },
+            {
+                action: "Status changed to Active",
+                date: "2023-06-25 09:45",
+                user: "John Doe",
+            },
+        ];
+
+        // Generate HTML for activity list
+        const activityHTML = activityData
+            .map(
+                (activity) => `
+            <li style="padding: 15px 0; border-bottom: 1px solid #eee;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <i class="fas fa-history" style="color: #3a86ff; margin-right: 10px;"></i>
+                        <strong>${activity.action}</strong> by ${
+                    activity.user
+                }
+                    </div>
+                    <div style="color: #666;">
+                        ${formatDate(activity.date, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}
+                    </div>
+                </div>
+            </li>
+        `
+            )
+            .join("");
+
+        document.getElementById("activityList").innerHTML =
+            activityHTML;
+    }
+</script>
+
+<style>
+    /* Additional styles for the detail page */
+    .detail-section {
+        margin-bottom: 30px;
+    }
+
+    .detail-section h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .detail-table td {
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .detail-table td:first-child {
+        width: 150px;
+        color: #666;
+    }
+
+    .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .loading-spinner {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+</style>
