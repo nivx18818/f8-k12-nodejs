@@ -25,7 +25,6 @@ exports.create = async (req, res) => {
 
 exports.store = async (req, res) => {
   const { name, username, email, password } = req.body;
-
   await usersService.create({ name, username, email, password });
   res.redirect("/admin/users");
 };
