@@ -1,0 +1,28 @@
+<div class="modal" id="confirmDeleteModal">
+    <div class="modal-content">
+        <h3 class="modal-title">Confirm Delete</h3>
+        <div class="modal-body">
+            <span>Are you sure you want to delete user</span>
+            <span id="deleteItemName">"<%= user.name %>"?</span>
+            <span>This action cannot be undone.</span>
+        </div>
+        <div class="modal-footer">
+            <button
+                type="button"
+                id="cancelDelete"
+                class="btn btn-secondary"
+                data-cancel
+            >
+                Cancel
+            </button>
+            <button
+                type="button"
+                id="confirmDelete"
+                class="btn btn-danger"
+                data-confirm
+            >
+                Delete
+            </button>
+        </div>
+    </div>
+</div>

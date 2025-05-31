@@ -219,7 +219,7 @@ h6 {
     color: #f44336;
     font-size: 12px;
     margin-top: 5px;
-    display: none;
+    /* display: none; */
 }
 
 .form-control.error {
@@ -470,7 +470,7 @@ h6 {
 
 /* Modal Components */
 .modal {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -480,10 +480,6 @@ h6 {
     align-items: center;
     justify-content: center;
     z-index: 1000;
-}
-
-.modal.show {
-    display: flex;
 }
 
 .modal-content {

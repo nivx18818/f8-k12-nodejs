@@ -1,0 +1,32 @@
+<div class="flash-messages">
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background: #ccc;
+        }
+
+        .flash-message.success {
+            border-color: #a3cfbb;
+            background: #d1e7dd;
+        }
+
+        .flash-message.error {
+            border-color: #f5c6cb;
+            background: #f8d7da;
+        }
+
+        .flash-message.warning {
+            border-color: #ffeeba;
+            background: #fff3cd;
+        }
+    </style>
+    <% if (flash) { %>
+    <div class="flash-message <%= flash.type %>"><%= flash.message %></div>
+    <% } %>
+</div>

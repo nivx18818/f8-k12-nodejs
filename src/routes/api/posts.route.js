@@ -3,7 +3,7 @@ const router = express.Router();
 
 const postsController = require("@/controllers/api/posts.controller");
 const commentsController = require("@/controllers/api/comments.controller");
-const postsValidator = require("@/validators/posts.validator");
+const postsValidator = require("@/validators/api/posts.validator");
 const attachResourceLoaders = require("@/utils/attachResourceLoaders");
 
 attachResourceLoaders(router, "posts");

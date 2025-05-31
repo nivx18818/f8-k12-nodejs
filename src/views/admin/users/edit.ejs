@@ -1,7 +1,7 @@
 <div class="content-header">
     <h1>Edit User</h1>
     <div>
-        <a href="users.html" class="btn btn-secondary">
+        <a href="/admin/users" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Back to Users
         </a>
         <a
@@ -22,7 +22,7 @@
 </div>
 
 <!-- Edit User Form -->
-<form id="editUserForm" class="card">
+<form id="editUserForm" class="card" method="post" action="/admin/users/<%= old?.id %>">
     <div class="card-header">
         <h3>User Information</h3>
     </div>
@@ -34,12 +34,17 @@
                 <input
                     type="text"
                     id="userName"
-                    name="userName"
+                    name="name"
+                    value="<%= old?.name %>"
                     class="form-control"
                     required
                     data-validate="name"
                 />
-                <span class="error-text" id="userNameError"></span>
+                <% if (errors?.name) { %>
+                    <span class="error-text" id="userNameError">
+                        <%= errors.name %>
+                    </span>
+                <% } %>
             </div>
 
             <div class="form-row">
@@ -48,11 +53,16 @@
                     <input
                         type="email"
                         id="userEmail"
-                        name="userEmail"
+                        name="email"
+                        value="<%= old?.email %>"
                         class="form-control"
                         required
                     />
-                    <span class="error-text" id="userEmailError"></span>
+                    <% if (errors?.email) { %>
+                        <span class="error-text" id="userEmailError">
+                            <%= errors.email %>
+                        </span>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
@@ -60,11 +70,15 @@
                     <input
                         type="tel"
                         id="userPhone"
-                        name="userPhone"
+                        name="phone"
                         class="form-control"
                         data-validate="phone"
                     />
-                    <span class="error-text" id="userPhoneError"></span>
+                    <% if (errors?.phone) { %>
+                        <span class="error-text" id="userPhoneError">
+                            <%= errors.phone %>
+                        </span>
+                    <% } %>
                 </div>
             </div>
 
@@ -72,11 +86,16 @@
                 <label for="userAddress">Address</label>
                 <textarea
                     id="userAddress"
-                    name="userAddress"
+                    name="address"
+                    value="<%= old?.address %>"
                     class="form-control"
                     rows="2"
                 ></textarea>
-                <span class="error-text" id="userAddressError"></span>
+                <% if (errors?.address) { %>
+                    <span class="error-text" id="userAddressError">
+                        <%= errors.address %>
+                    </span>
+                <% } %>
             </div>
         </div>
 
@@ -87,12 +106,17 @@
                 <input
                     type="text"
                     id="userUsername"
-                    name="userUsername"
+                    name="username"
+                    value="<%= old?.username %>"
                     class="form-control"
                     required
                     data-validate="username"
                 />
-                <span class="error-text" id="userUsernameError"></span>
+                <% if (errors?.username) { %>
+                    <span class="error-text" id="userUsernameError">
+                        <%= errors.username %>
+                    </span>
+                <% } %>
             </div>
 
             <div class="form-row">
@@ -100,7 +124,7 @@
                     <label for="userRole">Role*</label>
                     <select
                         id="userRole"
-                        name="userRole"
+                        name="role"
                         class="form-control"
                         required
                     >
@@ -109,14 +133,18 @@
                         <option value="editor">Editor</option>
                         <option value="viewer">Viewer</option>
                     </select>
-                    <span class="error-text" id="userRoleError"></span>
+                    <% if (errors?.role) { %>
+                        <span class="error-text" id="userRoleError">
+                            <%= errors.role %>
+                        </span>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
                     <label for="userStatus">Status*</label>
                     <select
                         id="userStatus"
-                        name="userStatus"
+                        name="status"
                         class="form-control"
                         required
                     >
@@ -125,7 +153,11 @@
                         <option value="inactive">Inactive</option>
                         <option value="pending">Pending</option>
                     </select>
-                    <span class="error-text" id="userStatusError"></span>
+                    <% if (errors?.status) { %>
+                        <span class="error-text" id="userStatusError">
+                            <%= errors.status %>
+                        </span>
+                    <% } %>
                 </div>
             </div>
 
@@ -134,6 +166,8 @@
                 <input
                     type="text"
                     id="dateCreated"
+                    name="createdAt"
+                    value="<%= old?.createdAt %>"
                     class="form-control"
                     readonly
                     disabled
@@ -163,11 +197,15 @@
                     <input
                         type="password"
                         id="userPassword"
-                        name="userPassword"
+                        name="password"
                         class="form-control"
                         data-validate="password"
                     />
-                    <span class="error-text" id="userPasswordError"></span>
+                    <% if (errors?.password) { %>
+                        <span class="error-text" id="userPasswordError">
+                            <%= errors.password %>
+                        </span>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
@@ -177,13 +215,14 @@
                     <input
                         type="password"
                         id="userConfirmPassword"
-                        name="userConfirmPassword"
+                        name="confirmPassword"
                         class="form-control"
                     />
-                    <span
-                        class="error-text"
-                        id="userConfirmPasswordError"
-                    ></span>
+                    <% if (errors?.confirmPassword) { %>
+                        <span class="error-text" id="userConfirmPasswordError">
+                            <%= errors.confirmPassword %>
+                        </span>
+                    <% } %>
                 </div>
             </div>
             <p class="form-help-text">
@@ -229,3 +268,212 @@
         </div>
     </div>
 </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // // Get user ID from URL
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const userId = urlParams.get("id");
+        // console.log(urlParams);
+
+        // if (!userId) {
+        //     // Redirect to users page if no ID is provided
+        //     window.location.href = "/admin/users";
+        //     return;
+        // }
+
+        // Initialize form validation
+        // initFormValidation("editUserForm");
+
+        // Load user data
+        loadUserData(userId);
+
+        // Handle form submission
+        document
+            .getElementById("editUserForm")
+            .addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                if (validateForm("editUserForm")) {
+                    // Check if password and confirm password match (if provided)
+                    const password =
+                        document.getElementById("userPassword").value;
+                    const confirmPassword = document.getElementById(
+                        "userConfirmPassword"
+                    ).value;
+
+                    if (password && password !== confirmPassword) {
+                        showError(
+                            document.getElementById(
+                                "userConfirmPassword"
+                            ),
+                            "Passwords do not match."
+                        );
+                        return;
+                    }
+
+                    // Update user (in a real application, this would be an API call)
+                    console.log("Updating old?...");
+
+                    // Generate form data for logging
+                    const formData = {
+                        id: userId,
+                        name: document.getElementById("userName").value,
+                        username:
+                            document.getElementById("userUsername")
+                                .value,
+                        email: document.getElementById("userEmail")
+                            .value,
+                        phone: document.getElementById("userPhone")
+                            .value,
+                        address:
+                            document.getElementById("userAddress")
+                                .value,
+                        role: document.getElementById("userRole").value,
+                        status: document.getElementById("userStatus")
+                            .value,
+                        password: password || "unchanged",
+                        sendEmail:
+                            document.getElementById(
+                                "emailNotifications"
+                            ).checked,
+                        notifyAdmin:
+                            document.getElementById(
+                                "adminNotifications"
+                            ).checked,
+                    };
+
+                    console.log("Form data:", formData);
+
+                    // Show success message
+                    showMessage(
+                        "successMessage",
+                        "User has been updated successfully.",
+                        3000
+                    );
+
+                    // Redirect after a delay
+                    setTimeout(() => {
+                        window.location.href =
+                            "user-detail.html?id=" + userId;
+                    }, 2000);
+                }
+            });
+
+        // Handle cancel button
+        document
+            .getElementById("cancelBtn")
+            .addEventListener("click", function () {
+                window.location.href = "user-detail.html?id=" + userId;
+            });
+
+        // Handle delete button
+        document
+            .getElementById("deleteUserBtn")
+            .addEventListener("click", async function (e) {
+                e.preventDefault();
+
+                // Get user name from field
+                const userName =
+                    document.getElementById("userName").value;
+
+                // Set the name in the modal
+                document.getElementById("deleteUserName").textContent =
+                    userName;
+
+                // Show modal
+                const result = await showConfirmDialog(
+                    "confirmDeleteModal"
+                );
+
+                if (result) {
+                    // In a real app, this would make an API call to delete the user
+                    console.log("Deleting user with ID:", userId);
+
+                    // Redirect to users list
+                    window.location.href = "users.html";
+                }
+            });
+
+        // Custom validation for password confirmation
+        document
+            .getElementById("userConfirmPassword")
+            .addEventListener("blur", function () {
+                const password =
+                    document.getElementById("userPassword").value;
+                const confirmPassword = this.value;
+
+                if (password && password !== confirmPassword) {
+                    showError(this, "Passwords do not match.");
+                }
+            });
+    });
+
+    // Load user data for editing
+    function loadUserData(userId) {
+        // In a real application, this would be an API call
+        // For demonstration, we'll use mock data
+        const userData = {
+            id: userId,
+            name: "John Doe",
+            username: "johndoe",
+            email: "john.doe@example.com",
+            phone: "+1 (555) 123-4567",
+            address: "123 Main St, City, Country",
+            role: "admin",
+            status: "active",
+            dateCreated: "2023-05-15",
+            lastLogin: "Today, 09:45 AM",
+            emailNotifications: true,
+            adminNotifications: false,
+        };
+
+        // Set document title
+        document.title = `Edit User: ${userData.name} | Admin Dashboard`;
+
+        // Fill form fields with user data
+        document.getElementById("userName").value = userData.name;
+        document.getElementById("userEmail").value = userData.email;
+        document.getElementById("userPhone").value = userData.phone;
+        document.getElementById("userAddress").value = userData.address;
+        document.getElementById("userUsername").value =
+            userData.username;
+        document.getElementById("userRole").value = userData.role;
+        document.getElementById("userStatus").value = userData.status;
+        document.getElementById("dateCreated").value = formatDate(
+            userData.dateCreated
+        );
+        document.getElementById("lastLogin").value = userData.lastLogin;
+        document.getElementById("emailNotifications").checked =
+            userData.emailNotifications;
+        document.getElementById("adminNotifications").checked =
+            userData.adminNotifications;
+    }
+
+    // Format date helper
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
+    }
+</script>
+
+<style>
+    /* Additional styling for checkbox groups */
+    .checkbox-group {
+        margin-bottom: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    .form-help-text {
+        margin-top: 5px;
+        color: #666;
+        font-size: 13px;
+    }
+</style>
