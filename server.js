@@ -3,6 +3,7 @@ require("module-alias/register");
 const express = require("express");
 const expressEjsLayouts = require("express-ejs-layouts");
 const cookieParser = require("cookie-parser");
+const methodOverride = require("method-override");
 
 const mainRouter = require("@/routes/api");
 const adminRouter = require("@/routes/admin");
@@ -17,6 +18,7 @@ const app = express();
 const port = 3001;
 
 app.use(cookieParser());
+app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded());

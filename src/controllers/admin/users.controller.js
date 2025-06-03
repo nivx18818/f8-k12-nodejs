@@ -52,16 +52,6 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  const users = await usersService.getAll();
-  const user = await usersService.getById(req.params.id);
-
-  res.render("admin/users/index", {
-    title: "Users list",
-    users,
-    user,
-    isDeleting: true,
-  });
-
   await usersService.delete(req.params.id);
   res.redirect(`/admin/users`);
 };

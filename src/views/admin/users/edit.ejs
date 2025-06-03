@@ -22,7 +22,7 @@
 </div>
 
 <!-- Edit User Form -->
-<form id="editUserForm" class="card" method="post" action="/admin/users/<%= old?.id %>">
+<form id="editUserForm" class="card" method="post" action="/admin/users/<%= old?.id %>?_method=PUT">
     <div class="card-header">
         <h3>User Information</h3>
     </div>

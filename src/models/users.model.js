@@ -19,3 +19,8 @@ exports.update = async (id, updatedUser) => {
   await db.query("UPDATE users SET ? WHERE id = ?", [updatedUser, id]);
   return updatedUser;
 };
+
+exports.delete = async (id) => {
+  const [result] = await db.query("DELETE FROM users WHERE id = ?", [id]);
+  return result.affectedRows > 0;
+}

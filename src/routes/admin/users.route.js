@@ -8,8 +8,8 @@ router.get("/", usersController.index);
 router.post("/", usersValidator.create, usersController.store);
 router.get("/create", usersController.create);
 router.get("/:id", usersController.show);
-router.post("/:id", usersValidator.update, usersController.update);
+router.put("/:id", usersValidator.update, usersController.update);
+router.delete("/:id", usersController.delete);
 router.get("/:id/edit", usersController.edit);
-router.get("/:id/delete", usersController.delete);
 
 module.exports = router;
