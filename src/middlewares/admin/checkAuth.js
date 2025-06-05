@@ -5,7 +5,7 @@ const checkAuth = (req, res, next) => {
     return res.redirect("/admin/login");
   }
 
-  if (!res.locals.auth && isAuthRequired) {
+  if (res.locals.auth && !isAuthRequired) {
     return res.redirect("/admin/dashboard");
   }
 

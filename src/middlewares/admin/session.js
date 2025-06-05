@@ -2,25 +2,36 @@ const sessionsModel = require("@/models/sessions.model");
 const { randomUUID } = require("crypto");
 
 const session = async (req, res, next) => {
-  let _sid = req.cookies.sid;
-  let session = _sid && (await sessionsModel.findBySid(_sid));
+  let sid = req.cookies.sid;
+  let session = sid && (await sessionsModel.findById(sid));
 
   if (!session) {
-    _sid = randomUUID();
+    sid = randomUUID();
     const date = new Date();
-    session = await sessionsModel.create({ sid: _sid, data: "{}" });
-    date.setDate(date.getDate() + 1);
-    res.set("set-cookie", `sid=${_sid}; path=/; httpOnly; expires=${date}`);
+    date.setDate(date.getDate() + 7);
+
+    session = await sessionsModel.create({
+      id: sid,
+      data: "{}",
+      expires_at: date,
+    });
+
+    res.cookie("sid", sid, {
+      path: "/",
+      expires: date,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
   }
 
   req.session = JSON.parse(session.data);
 
   res.setFlash = (data) => {
     req.session.flash = data;
-  }
+  };
 
   res.on("finish", () => {
-    sessionsModel.update(_sid, {
+    sessionsModel.update(sid, {
       data: JSON.stringify(req.session),
     });
   });

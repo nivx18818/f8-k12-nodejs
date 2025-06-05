@@ -28,7 +28,7 @@ app.set("view engine", "ejs");
 app.set("views", "./src/views");
 app.set("layout", "admin/layouts/default");
 
-app.use("/admin", session, shareLocals, adminRouter);
+app.use("/admin", session, shareLocals, checkAuth, adminRouter);
 app.use("/api/v1/", mainRouter);
 
 app.use(handleNotFound);

@@ -10,6 +10,11 @@ exports.findById = async (id) => {
   return users[0];
 };
 
+exports.findByEmailAndPassword = async (email, password) => {
+  const [users] = await db.query("SELECT * FROM users WHERE email = ? AND password = ?", [email, password]);
+  return users[0];
+};
+
 exports.create = async (newUser) => {
   const [result] = await db.query("INSERT INTO users SET ?", [newUser]);
   return { ...newUser, id: result.insertId };
