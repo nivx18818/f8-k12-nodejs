@@ -25,8 +25,23 @@
             border-color: #ffeeba;
             background: #fff3cd;
         }
+
+        .flash-message.info {
+            border-color: #bee5eb;
+            background: #d1ecf1;
+        }
     </style>
-    <% if (flash) { %>
-    <div class="flash-message <%= flash.type %>"><%= flash.message %></div>
+    <% if (flashMessages && flashMessages.length) { %>
+        <% flashMessages.forEach((flash) => { %>
+            <div class="flash-message <%= flash.type %>"><%= flash.message %></div>
+        <% }); %>
+        <script>
+            setTimeout(() => {
+                document.querySelectorAll('.flash-message').forEach(msg => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 300);
+                });
+            }, 5000);
+        </script>
     <% } %>
 </div>

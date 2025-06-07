@@ -27,12 +27,7 @@ exports.create = async (req, res) => {
 exports.store = async (req, res) => {
   const { name, username, email, password } = req.body;
   await usersService.create({ name, username, email, password });
-
-  res.setFlash({
-    type: "success",
-    message: "User created successfully",
-  });
-
+  res.flash("success", "User created successfully");
   res.redirect("/admin/users");
 };
 
@@ -48,10 +43,12 @@ exports.edit = async (req, res) => {
 exports.update = async (req, res) => {
   const { name, old: username, email, password } = req.body;
   await usersService.update(req.params.id, { name, username, email, password });
+  res.flash("success", "User updated successfully!");
   res.redirect(`/admin/users/${req.params.id}`);
 };
 
 exports.delete = async (req, res) => {
   await usersService.delete(req.params.id);
+  res.flash("success", "User deleted successfully!");
   res.redirect(`/admin/users`);
 };

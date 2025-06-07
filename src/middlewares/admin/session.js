@@ -26,8 +26,17 @@ const session = async (req, res, next) => {
 
   req.session = JSON.parse(session.data);
 
-  res.setFlash = (data) => {
-    req.session.flash = data;
+  if (!req.session.flashMessages) {
+    req.session.flashMessages = [];
+  }
+
+  res.flash = (type, message) => {
+    req.session.flashMessages.push({ type, message });
+  };
+
+  res.getFlashMessages = (type) => {
+    if (!type) return req.session.flashMessages;
+    return req.session.flashMessages.filter((message) => message.type === type);
   };
 
   res.on("finish", () => {

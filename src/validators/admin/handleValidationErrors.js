@@ -14,6 +14,8 @@ const handleValidationErrors = (req, res, next) => {
       return errors;
     }, {});
 
+  res.flash("error", "Please correct the errors below and try again.");
+
   res.render(res.view, {
     errors,
     old: req.body,

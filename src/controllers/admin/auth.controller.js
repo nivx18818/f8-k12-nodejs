@@ -15,27 +15,26 @@ exports.login = async (req, res) => {
     req.body.password
   );
 
-  console.log(user);
-
   if (user) {
     req.session.userId = user.id;
+    res.flash("success", "Welcome back! You have successfully logged in.");
     return res.redirect("/admin/");
   }
 
-  res.setFlash({
-    type: "error",
-    message: "Invalid email or password.",
-  });
+  res.flash("error", "Invalid email or password.");
   return res.redirect("/admin/login");
 };
 
 exports.register = async (req, res) => {
   const { name, username, email, password } = req.body;
   await usersService.create({ name, username, email, password });
+
+  res.flash("success", "Account created successfully! Please login.");
   res.redirect("/admin/login");
 };
 
 exports.logout = async (req, res) => {
   delete req.session.userId;
+  res.flash("info", "You have been logged out successfully.");
   res.redirect("/admin/login");
 };

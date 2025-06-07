@@ -2,6 +2,7 @@ const checkAuth = (req, res, next) => {
   const isAuthRequired = !["/login", "/register"].includes(req.path);
 
   if (!res.locals.auth && isAuthRequired) {
+    res.flash("warning", "Please login to access this page.");
     return res.redirect("/admin/login");
   }
 

@@ -10,8 +10,8 @@ const shareLocals = async (req, res, next) => {
     res.locals.layout = "admin/layouts/auth";
   }
 
-  res.locals.flash = req.session.flash;
-  delete req.session.flash;
+  res.locals.flashMessages = req.session.flashMessages || [];
+  req.session.flashMessages = [];
 
   next();
 };
