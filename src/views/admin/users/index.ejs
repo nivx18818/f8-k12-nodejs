@@ -70,9 +70,6 @@
             <tr>
                 <th>User</th>
                 <th>Email</th>
-                <th>Role</th>
-                <th>Last Login</th>
-                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -83,7 +80,7 @@
                 <td>
                     <div style="display: flex; align-items: center">
                         <div class="avatar">
-                            <%= user?.name.split(" ").map((word) => word.charAt(0)).join("") %>
+                            <%= user?.name?.split(" ").map((word) => word.charAt(0)).join("") %>
                         </div>
                         <div style="margin-left: 15px">
                             <div class="item-title"><%= user.name %></div>
@@ -94,11 +91,6 @@
                     </div>
                 </td>
                 <td><%= user?.email %></td>
-                <td><%= user?.role %></td>
-                <td><%= user?.lastLogin %></td>
-                <td>
-                    <span class="badge badge-success">Active</span>
-                </td>
                 <td>
                     <div class="action-buttons">
                         <a

@@ -25,16 +25,16 @@
                         <td><%= user?.name %></td>
                     </tr>
                     <tr>
-                        <td>Email:</td>
-                        <td><%= user?.email %></td>
+                        <td>Username:</td>
+                        <td><%= user?.username %></td>
                     </tr>
                     <tr>
-                        <td>Role:</td>
-                        <td><%= user?.role %></td>
+                        <td>Gender:</td>
+                        <td><%= user?.gender %></td>
                     </tr>
                     <tr>
-                        <td>Status:</td>
-                        <td><%= user?.status %></td>
+                        <td>Birthday:</td>
+                        <td><%= user?.birthday %></td>
                     </tr>
                 </table>
             </div>
@@ -42,6 +42,12 @@
             <div class="detail-section">
                 <h3>Contact Information</h3>
                 <table class="detail-table">
+                    <% if (user?.email) { %>
+                        <tr>
+                            <td>Email:</td>
+                            <td><%= user?.email %></td>
+                        </tr>
+                    <% } %>
                     <% if (user?.phone) { %>
                         <tr>
                             <td>Phone:</td>

@@ -53,9 +53,7 @@ exports.update = [
       },
     },
     password: {
-      notEmpty: {
-        errorMessage: "Password is required.",
-      },
+      optional: true,
       isLength: {
         options: {
           min: 8,

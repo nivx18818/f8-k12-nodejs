@@ -119,48 +119,6 @@
                 <% } %>
             </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="userRole">Role*</label>
-                    <select
-                        id="userRole"
-                        name="role"
-                        class="form-control"
-                        required
-                    >
-                        <option value="">Select Role</option>
-                        <option value="admin">Administrator</option>
-                        <option value="editor">Editor</option>
-                        <option value="viewer">Viewer</option>
-                    </select>
-                    <% if (errors?.role) { %>
-                        <span class="error-text" id="userRoleError">
-                            <%= errors.role %>
-                        </span>
-                    <% } %>
-                </div>
-
-                <div class="form-group">
-                    <label for="userStatus">Status*</label>
-                    <select
-                        id="userStatus"
-                        name="status"
-                        class="form-control"
-                        required
-                    >
-                        <option value="">Select Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                        <option value="pending">Pending</option>
-                    </select>
-                    <% if (errors?.status) { %>
-                        <span class="error-text" id="userStatusError">
-                            <%= errors.status %>
-                        </span>
-                    <% } %>
-                </div>
-            </div>
-
             <div class="form-group">
                 <label for="dateCreated">Date Created</label>
                 <input
@@ -168,17 +126,6 @@
                     id="dateCreated"
                     name="createdAt"
                     value="<%= old?.createdAt %>"
-                    class="form-control"
-                    readonly
-                    disabled
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="lastLogin">Last Login</label>
-                <input
-                    type="text"
-                    id="lastLogin"
                     class="form-control"
                     readonly
                     disabled
