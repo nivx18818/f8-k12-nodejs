@@ -1,4 +1,4 @@
-const db = require("@/configs/db");
+const db = require("@/config/db");
 
 exports.findAll = async (page = 1, limit = 10) => {
   const [posts] = await db.query("SELECT * FROM posts LIMIT ? OFFSET ?", [
@@ -22,12 +22,9 @@ exports.findNumberOfPosts = async () => {
 exports.create = async (newPost) => {
   const [result] = await db.query("INSERT INTO posts SET ?", [newPost]);
   return { ...newPost, id: result.insertId };
-}
+};
 
 exports.update = async (id, updatedPost) => {
-  await db.query("UPDATE posts SET ? WHERE id = ?", [
-    updatedPost,
-    id,
-  ]);
+  await db.query("UPDATE posts SET ? WHERE id = ?", [updatedPost, id]);
   return updatedPost;
 };

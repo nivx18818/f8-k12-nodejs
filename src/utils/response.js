@@ -10,6 +10,8 @@ const success = (res, status, data) => {
 };
 
 const error = (res, status, message, errors) => {
+  console.trace(message);
+
   return res.status(status).json({
     success: false,
     message,

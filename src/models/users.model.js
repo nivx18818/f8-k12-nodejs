@@ -1,4 +1,4 @@
-const db = require("@/configs/db");
+const db = require("@/config/db");
 
 exports.findAll = async () => {
   const [users] = await db.query("SELECT * FROM users");
@@ -11,7 +11,10 @@ exports.findById = async (id) => {
 };
 
 exports.findByEmailAndPassword = async (email, password) => {
-  const [users] = await db.query("SELECT * FROM users WHERE email = ? AND password = ?", [email, password]);
+  const [users] = await db.query(
+    "SELECT * FROM users WHERE email = ? AND password = ?",
+    [email, password]
+  );
   return users[0];
 };
 
@@ -28,4 +31,4 @@ exports.update = async (id, updatedUser) => {
 exports.delete = async (id) => {
   const [result] = await db.query("DELETE FROM users WHERE id = ?", [id]);
   return result.affectedRows > 0;
-}
+};

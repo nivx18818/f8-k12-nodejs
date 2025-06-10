@@ -1,5 +1,5 @@
 require("module-alias/register");
-const db = require("@/configs/db");
+const db = require("@/config/db");
 const { faker } = require("@faker-js/faker");
 const slugify = require("slugify");
 

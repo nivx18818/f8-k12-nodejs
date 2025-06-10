@@ -1,4 +1,4 @@
-const db = require("@/configs/db");
+const db = require("@/config/db");
 
 exports.findAll = async () => {
   const [sessions] = await db.query("SELECT * FROM sessions");
@@ -6,7 +6,9 @@ exports.findAll = async () => {
 };
 
 exports.findById = async (id) => {
-  const [sessions] = await db.query("SELECT * FROM sessions WHERE id = ?", [id]);
+  const [sessions] = await db.query("SELECT * FROM sessions WHERE id = ?", [
+    id,
+  ]);
   return sessions[0];
 };
 

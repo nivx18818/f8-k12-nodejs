@@ -1,6 +1,7 @@
 const usersService = require("@/services/users.service");
 const throwError = require("@/utils/throwError");
 const response = require("@/utils/response");
+const transporter = require("@/config/mailer");
 
 const throw404 = () => throwError(404, "User not found");
 
