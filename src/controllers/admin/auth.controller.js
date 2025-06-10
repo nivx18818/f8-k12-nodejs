@@ -2,6 +2,7 @@ const usersService = require("@/services/users.service");
 const usersModel = require("@/models/users.model");
 const jwt = require("@/utils/jwt");
 const transporter = require("@/config/mailer");
+const loadEmail = require("@/utils/loadEmail");
 
 exports.showLoginForm = async (req, res) => {
   res.render("admin/auth/login");
@@ -34,18 +35,16 @@ exports.register = async (req, res) => {
   const token = jwt.createToken({ userId: user.id });
   const verificationUrl = `${req.protocol}://${req.host}/admin/verify-email?token=${token}`;
 
+  const emailTemplate = await loadEmail("auth/verification", {
+    user,
+    verificationUrl,
+  });
+
   await transporter.sendMail({
     from: process.env.MAIL_SENDER,
     to: process.env.MAIL_RECEIVER_SAMPLE, // user.email
     subject: `Email Verification for ${user.name}`,
-    html: `
-      <h1>Welcome to Our Platform, ${user.name}!</h1>
-      <p>Thank you for registering. Please verify your email address by clicking the link below:</p>
-      <a href="${verificationUrl}">Verify Email</a>
-      <p>If you did not register, please ignore this email.</p>
-      <p>Best regards,</p>
-      <p>F8 Team</p>
-    `,
+    html: emailTemplate,
   });
 
   res.flash(

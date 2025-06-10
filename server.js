@@ -1,3 +1,5 @@
+process.env.BASE_DIR = __dirname;
+
 require("dotenv").config();
 require("module-alias/register");
 
