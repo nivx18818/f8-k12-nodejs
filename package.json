@@ -22,6 +22,7 @@
   },
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon server.js",
+    "queue:work": "node --watch ./src/workers/queueWorker.js",
     "start": "node server.js"
   },
   "keywords": [],

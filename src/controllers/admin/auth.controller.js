@@ -1,8 +1,7 @@
 const usersService = require("@/services/users.service");
 const usersModel = require("@/models/users.model");
 const jwt = require("@/utils/jwt");
-const transporter = require("@/config/mailer");
-const loadEmail = require("@/utils/loadEmail");
+const queue = require("@/utils/queue");
 
 exports.showLoginForm = async (req, res) => {
   res.render("admin/auth/login");
@@ -32,20 +31,7 @@ exports.register = async (req, res) => {
   const { name, username, email, password } = req.body;
   const user = await usersService.create({ name, username, email, password });
 
-  const token = jwt.createToken({ userId: user.id });
-  const verificationUrl = `${req.protocol}://${req.host}/admin/verify-email?token=${token}`;
-
-  const emailTemplate = await loadEmail("auth/verification", {
-    user,
-    verificationUrl,
-  });
-
-  await transporter.sendMail({
-    from: process.env.MAIL_SENDER,
-    to: process.env.MAIL_RECEIVER_SAMPLE, // user.email
-    subject: `Email Verification for ${user.name}`,
-    html: emailTemplate,
-  });
+  queue.dispatch("sendVerificationEmail", { userId: user.id });
 
   res.flash(
     "success",
