@@ -2,8 +2,14 @@ require("dotenv").config();
 require("module-alias/register");
 const queueModel = require("@/models/queue.model");
 const sendVerificationEmail = require("@/jobs/sendVerificationEmail");
+const sendPasswordResetEmail = require("@/jobs/sendPasswordResetEmail");
+const sendPasswordChangedNotification = require("@/jobs/sendPasswordChangedNotification");
 
-const handlers = { sendVerificationEmail };
+const handlers = {
+  sendVerificationEmail,
+  sendPasswordResetEmail,
+  sendPasswordChangedNotification,
+};
 
 const processJob = async (job) => {
   const handler = handlers[job.type];
