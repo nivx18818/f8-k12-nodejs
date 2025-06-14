@@ -10,6 +10,13 @@ exports.findById = async (id) => {
   return users[0];
 };
 
+exports.findByEmail = async (email) => {
+  const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
+    email,
+  ]);
+  return users[0];
+};
+
 exports.findByEmailAndPassword = async (email, password) => {
   const [users] = await db.query(
     "SELECT * FROM users WHERE email = ? AND password = ?",
@@ -23,8 +30,9 @@ exports.create = async (newUser) => {
   return { ...newUser, id: result.insertId };
 };
 
-exports.update = async (id, updatedUser) => {
-  await db.query("UPDATE users SET ? WHERE id = ?", [updatedUser, id]);
+exports.update = async (id, data) => {
+  await db.query("UPDATE users SET ? WHERE id = ?", [data, id]);
+  const updatedUser = await this.findById(id);
   return updatedUser;
 };
 

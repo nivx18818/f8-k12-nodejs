@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 exports.createToken = (payload, options = {}) => {
+  const defaultExpiresIn = 60 * 60; // 1 hour
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: 60 * 60,
+    expiresIn: defaultExpiresIn,
     ...options,
   });
   return token;

@@ -10,6 +10,11 @@ exports.getById = async (id) => {
   return user;
 };
 
+exports.getByEmail = async (email) => {
+  const user = await usersModel.findByEmail(email);
+  return user;
+}
+
 exports.create = async (data) => {
   const newUser = await usersModel.create(data);
   return newUser;
