@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("module-alias/register");
+
 const queueModel = require("@/models/queue.model");
 const sendVerificationEmail = require("@/jobs/sendVerificationEmail");
 const sendPasswordResetEmail = require("@/jobs/sendPasswordResetEmail");
@@ -9,6 +10,17 @@ const handlers = {
   sendVerificationEmail,
   sendPasswordResetEmail,
   sendPasswordChangedNotification,
+  sendScheduledEmail: async () => {
+    await require("@/config/mailer").sendMail({
+      from: process.env.MAIL_SENDER,
+      to: process.env.MAIL_RECEIVER_SAMPLE, // user.email
+      subject: `Scheduled Email`,
+      html: `
+        <h1>Never mind!</h1>
+        <p>Just check if this fking code still works.</p>
+      `,
+    });
+  },
 };
 
 const processJob = async (job) => {
