@@ -9,6 +9,7 @@ const methodOverride = require("method-override");
 const mainRouter = require("@/routes/api");
 const adminRouter = require("@/routes/admin");
 
+const sequelize = require("@/config/db");
 const handleNotFound = require("@/middlewares/handleNotFound");
 const handleErrors = require("@/middlewares/handleErrors");
 const session = require("@/middlewares/admin/session");
@@ -30,7 +31,20 @@ app.set("views", "./src/views");
 app.set("layout", "admin/layouts/default");
 
 app.use("/admin", session, shareLocals, checkAuth, adminRouter);
-app.use("/api/v1/", mainRouter);
+app.use(
+  "/api/v1/",
+  async (req, res, next) => {
+    try {
+      await sequelize.authenticate();
+      console.log("Connection has been established successfully.");
+    } catch (error) {
+      console.error("Unable to connect to the database:", error);
+    } finally {
+      next();
+    }
+  },
+  mainRouter
+);
 
 app.use(handleNotFound);
 app.use(handleErrors);

@@ -7,7 +7,7 @@ exports.create = [
       notEmpty: true,
       errorMessage: "Title is required",
     },
-    body: {
+    content: {
       notEmpty: true,
       errorMessage: "Body is required",
     },
@@ -22,7 +22,7 @@ exports.update = [
       notEmpty: true,
       errorMessage: "Title cannot be empty",
     },
-    body: {
+    content: {
       optional: true,
       notEmpty: true,
       errorMessage: "Body cannot be empty",

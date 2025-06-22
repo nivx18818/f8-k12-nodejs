@@ -1,13 +1,16 @@
 const postsService = require("@/services/posts.service");
 const response = require("@/utils/response");
+const { throw404 } = require("@/utils/throwError");
 
 exports.getList = async (req, res) => {
   const { page, limit } = req.query;
-  const { posts } = await postsService.getAll(page, limit);
+  const posts = await postsService.getAll(page, limit);
   return response.success(res, 200, posts);
 };
 
 exports.getById = async (req, res) => {
+  const post = await postsService.getById(req.params.id);
+  if (!post) throw404();
   return response.success(res, 200, req.post);
 };
 

@@ -1,30 +1,35 @@
-const db = require("@/config/db");
+const { DataTypes } = require("sequelize");
+const sequelize = require("@/config/db");
 
-exports.findAll = async (page = 1, limit = 10) => {
-  const [posts] = await db.query("SELECT * FROM posts LIMIT ? OFFSET ?", [
-    limit,
-    (page - 1) * limit,
-  ]);
-  const total = await this.queryNumberOfPosts();
-  return { posts, total };
-};
+DataTypes.da
 
-exports.findById = async (id) => {
-  const [posts] = await db.query("SELECT * FROM posts WHERE id = ?", [id]);
-  return posts[0];
-};
+const Post = sequelize.define(
+  "Post",
+  {
+    user_id: DataTypes.BIGINT({
+      length: 9,
+      unsigned: true,
+      zerofill: true,
+    }),
+    slug: {
+      type: DataTypes.STRING(45),
+      unique: true,
+    },
+    title: {
+      type: DataTypes.STRING(191),
+      allowNull: false,
+    },
+    description: DataTypes.TEXT,
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "posts",
+    underscored: true,
+    timestamps: true,
+  }
+);
 
-exports.findNumberOfPosts = async () => {
-  const [[{ total }]] = await db.query("SELECT COUNT(*) AS total FROM posts");
-  return Number(total);
-};
-
-exports.create = async (newPost) => {
-  const [result] = await db.query("INSERT INTO posts SET ?", [newPost]);
-  return { ...newPost, id: result.insertId };
-};
-
-exports.update = async (id, updatedPost) => {
-  await db.query("UPDATE posts SET ? WHERE id = ?", [updatedPost, id]);
-  return updatedPost;
-};
+module.exports = Post;

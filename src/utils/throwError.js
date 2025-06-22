@@ -7,7 +7,7 @@ const throwError = (status, message, errors) => {
   });
 };
 
-const throw404 = (message) => throwError(404, message);
+const throw404 = (message = "Resource not found") => throwError(404, message);
 
 module.exports = {
   throwError,
