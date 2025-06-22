@@ -1,8 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("@/config/db");
 
-DataTypes.da
-
 const Post = sequelize.define(
   "Post",
   {
