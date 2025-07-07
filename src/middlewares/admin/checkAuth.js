@@ -1,7 +1,6 @@
 const checkAuth = (req, res, next) => {
-  const isAuthRequired = !["/login", "/register", "/verify-email"].includes(
-    req.path
-  );
+  const authPaths = ["/login", "/register", "/verify-email", "/forgot-password"];
+  const isAuthRequired = !authPaths.includes(req.path);
 
   if (!res.locals.auth && isAuthRequired) {
     res.flash("warning", "Please login to access this page.");

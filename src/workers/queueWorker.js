@@ -13,7 +13,7 @@ const handlers = {
   sendScheduledEmail: async () => {
     await require("@/config/mailer").sendMail({
       from: process.env.MAIL_SENDER,
-      to: process.env.MAIL_RECEIVER_SAMPLE, // user.email
+      to: process.env.MAIL_RECEIVER_SAMPLE,
       subject: `Scheduled Email`,
       html: `
         <h1>Never mind!</h1>
@@ -27,11 +27,8 @@ const processJob = async (job) => {
   const handler = handlers[job.type];
   if (handler) {
     try {
-      await queueModel.update(job.id, {
-        status: "processing",
-        retry_count: job.status == "rejected" ? job.retry_count + 1 : 0,
-      });
-      handler(job);
+      await queueModel.update(job.id, { status: "processing" });
+      handler({ ...job, payload: JSON.parse(job.payload) });
       await queueModel.update(job.id, { status: "completed" });
     } catch (error) {
       console.error(error);
@@ -52,10 +49,12 @@ const queueWorker = {
 
       const rejectedJobs = await queueModel.findByStatus("rejected");
       for (const job of rejectedJobs) {
-        const toRetry =
-          job.retry_count < job.max_retries && new Date() - job.updated_at >= 4;
+        const toRetry = job.retry_count < job.max_retries && new Date() - job.updated_at >= 4000;
         if (toRetry) {
-          await queueModel.update(job.id, { status: "pending" });
+          await queueModel.update(job.id, {
+            status: "pending",
+            retry_count: job.retry_count + 1,
+          });
         }
       }
 

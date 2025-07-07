@@ -1,3 +1,5 @@
 node_modules
-.prettierignore
+.prettierrc
 .env*
+!.env.example
+.vscode
